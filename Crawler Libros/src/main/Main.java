@@ -16,9 +16,10 @@ import java.util.regex.*;
  * @author Miguel González Gómez y Jaime Bárez Lobato
  */
 public class Main {
-
-	final int CUANTOS = 5;
+    
+    final int CUANTOS = 5;
      /**
+     * Crawler de Libros. Recopila datos de libros.
      * @param args los argumentos de línea de comandos
      */
 	public Main() throws IOException {
