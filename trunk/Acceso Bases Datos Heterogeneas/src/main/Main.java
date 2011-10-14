@@ -6,7 +6,7 @@ package main;
 
 /**
  *
- * @author JaimeInves
+ * @author Jaime Bárez y Miguel González
  */
 public class Main {
 
