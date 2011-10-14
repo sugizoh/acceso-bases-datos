@@ -1,0 +1,8 @@
+1- Configurar el crawdler para importar datos de dos páginas distintas
+    y generar el SQL para la inserción de los datos en la BD
+
+2- Crear clases para manejo de base de datos por separado
+
+3- Crear clase para unificar ambas bases de datos
+
+5- Crear interfaz gráfica para el manejo del programa
