@@ -13,7 +13,7 @@ import java.util.regex.*;
 
 /**
  *
- * @author Miguel González Gómez & Jaime Báred Lobato
+ * @author Miguel González Gómez y Jaime Bárez Lobato
  */
 public class Main {
 
