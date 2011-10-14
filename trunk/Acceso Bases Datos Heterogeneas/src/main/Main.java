@@ -7,7 +7,8 @@ package main;
 public class Main {
 
     /**
-     * @param args the command line arguments
+     * Función principal del programa
+     * @param args los argumentos de línea de comandos
      */
     public static void main(String[] args) {
         Main main = new Main();
