@@ -18,6 +18,9 @@ import java.util.regex.*;
 public class Main {
 
 	final int CUANTOS = 5;
+     /**
+     * @param args los argumentos de línea de comandos
+     */
 	public Main() throws IOException {
 		String sFichero = "libros.txt";
 		File fichero = new File(sFichero);
