@@ -8,6 +8,6 @@ package main;
  *
  * @author JaimeInves
  */
-public class NewClass_1 {
+public class NewClass4 {
     
 }
