@@ -1,6 +1,7 @@
 package main;
 
 import BD.BaseDatos;
+import java.util.ArrayList;
 
 /**
  *
@@ -18,6 +19,13 @@ public class Main
         //Creamos un objeto para manejar la base de datos
         bd = new BaseDatos();
 
+        //Vamos a imprimir una consulta a la base de datos de amazon
+        String sqlAmazon = "SELECT tituloLibro, idAutor, numPaginas, enStock FROM `Amazon` WHERE numPaginas > 400;";
+
+        ArrayList<String> arrayConsulta = bd.consultaLibros(sqlAmazon);
+
+        for(int i=0; i<arrayConsulta.size(); i++)
+            System.out.println(arrayConsulta.get(i));
     }
 
     /**
