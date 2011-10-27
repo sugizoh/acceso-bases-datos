@@ -20,7 +20,7 @@ public class Main
         bd = new BaseDatos();
 
         //Vamos a imprimir una consulta a la base de datos de amazon
-        String sqlAmazon = "SELECT tituloLibro, idAutor, numPaginas, enStock FROM `Amazon` WHERE numPaginas > 400;";
+        String sqlAmazon = "SELECT titulo, editorial, autor FROM Libro";
 
         ArrayList<String> arrayConsulta = bd.consultaLibros(sqlAmazon);
 

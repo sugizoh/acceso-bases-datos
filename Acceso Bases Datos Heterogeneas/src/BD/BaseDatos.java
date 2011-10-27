@@ -24,12 +24,15 @@ public class BaseDatos
 {
     private Connection conexionBD;
     private BaseDatosAmazon bdAmazon;
+    private Diccionario diccionario;
 
     /*
      * Constructor de la base de datos
      */
     public BaseDatos()
     {
+        diccionario = new Diccionario();
+        
         try
         {
             Class.forName("org.sqlite.JDBC");
@@ -109,8 +112,9 @@ public class BaseDatos
         ArrayList<String> resultadosConsulta = new ArrayList<String>();
 
         //Aquí se tendría que parsear la consulta mediante Regex y finalmente
+        String sqlAmazon = diccionario.convertirAmazon(sqlConsulta);
 
-        resultadosConsulta = bdAmazon.consultaLibros(sqlConsulta); //sqlConsulta parseada para la base de datos de amazon
+        //resultadosConsulta = bdAmazon.consultaLibros(diccionario.convertirAmazon(sqlConsulta)); //sqlConsulta parseada para la base de datos de amazon
 
         return resultadosConsulta;
     }
@@ -135,45 +139,69 @@ class BaseDatosAmazon
         Statement stat;
         ResultSet rs;
         try {
+            //Realizamos la conslta y la recogemos en un ResultSet
             stat = conexionBD.createStatement();
             rs = stat.executeQuery(sqlConsulta);
 
+            //Columnas que se seleccionan, entre SELECT y FROM
+            String regexColumnas = "SELECT (.*?) FROM";
+            Pattern patternColumnas = Pattern.compile(regexColumnas, Pattern.MULTILINE | Pattern.CASE_INSENSITIVE);
+            Matcher matcherColumnas = patternColumnas.matcher(sqlConsulta);
+            String columnas = matcherColumnas.group(0);
+
+            //Recorremos las tuplas
             while (rs.next()) {
                 String lineaResultado = "";
-                if(existeCoincidenciaPatron("idLibro", sqlConsulta)) {
+                if(existeCoincidenciaPatron("idLibro", columnas)) {
                     lineaResultado += "Identidad: " + rs.getInt("idLibro") + "\n";
                 }
 
-                if(existeCoincidenciaPatron("tituloLibro", sqlConsulta)) {
+                if(existeCoincidenciaPatron("tituloLibro", columnas)) {
                     lineaResultado += "Título: " + rs.getString("tituloLibro") + "\n";
                 }
 
-                if(existeCoincidenciaPatron("idAutor", sqlConsulta)) {
+                if(existeCoincidenciaPatron("idAutor", columnas)) {
                     lineaResultado += "Identidad del autor: " + rs.getInt("idAutor") + "\n";
                 }
 
-                if(existeCoincidenciaPatron("editorial", sqlConsulta)) {
+                if(existeCoincidenciaPatron("editorial", columnas)) {
                     lineaResultado += "Editorial: " + rs.getString("editorial") + "\n";
                 }
 
-                if(existeCoincidenciaPatron("numPaginas", sqlConsulta)) {
+                if(existeCoincidenciaPatron("numPaginas", columnas)) {
                     lineaResultado += "Número de páginas: " + rs.getInt("numPaginas") + "\n";
                 }
 
-                if(existeCoincidenciaPatron("enStock", sqlConsulta)) {
+                if(existeCoincidenciaPatron("enStock", columnas)) {
                     lineaResultado += "En stock: " + rs.getBoolean("enStock") + "\n";
                 }
 
-                if(existeCoincidenciaPatron("precio", sqlConsulta)) {
+                if(existeCoincidenciaPatron("precio", columnas)) {
                     lineaResultado += "Precio: " + rs.getDouble("precio") + "\n";
                 }
 
-                if(existeCoincidenciaPatron("descripcion", sqlConsulta)) {
+                if(existeCoincidenciaPatron("descripcion", columnas)) {
                     lineaResultado += "Descripción: " + rs.getString("descripcion") + "\n";
                 }
 
-                if(existeCoincidenciaPatron("fotografia", sqlConsulta)) {
+                if(existeCoincidenciaPatron("fotografia", columnas)) {
                     lineaResultado += "Fotografía: " + rs.getString("fotografia") + "\n";
+                }
+
+                if(existeCoincidenciaPatron("nombreAutor", columnas)) {
+                    lineaResultado += "Nombre del autor: " + rs.getString("nombreAutor") + "\n";
+                }
+
+                if(existeCoincidenciaPatron("apellidosAutor", columnas)) {
+                    lineaResultado += "Apellidos del autor: " + rs.getString("apellidosAutor") + "\n";
+                }
+
+                if(existeCoincidenciaPatron("lugarNacimiento", columnas)) {
+                    lineaResultado += "Lugar de nacimiento: " + rs.getString("lugarNacimiento") + "\n";
+                }
+
+                if(existeCoincidenciaPatron("nacimiento", columnas)) {
+                    lineaResultado += "Año de nacimiento: " + rs.getInt("nacimiento") + "\n";
                 }
 
                 resultadosConsulta.add(lineaResultado);
