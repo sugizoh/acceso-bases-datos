@@ -32,7 +32,7 @@ public class Main_old
      * Función principal del programa
      * @param args los argumentos de línea de comandos
      */
-    public static void main(String[] args) {
+    /*public static void main(String[] args) {
         Main_old main = new Main_old();
-    }
+    }*/
 }
