@@ -16,22 +16,23 @@ import java.util.logging.Logger;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+
 /**
  *
  * @author Jaime Bárez y Miguel González
  */
-public class BaseDatos
+public class BaseDatos_old
 {
     private Connection conexionBD;
     private BaseDatosAmazon bdAmazon;
-    private Diccionario diccionario;
+    private Diccionario_old diccionario;
 
     /*
      * Constructor de la base de datos
      */
-    public BaseDatos()
+    public BaseDatos_old()
     {
-        diccionario = new Diccionario();
+        diccionario = new Diccionario_old();
         
         try
         {
@@ -46,9 +47,9 @@ public class BaseDatos
             //Creamos el objeto para manejar la base de datos de amazon
             bdAmazon = new BaseDatosAmazon(conexionBD);
         } catch (ClassNotFoundException ex) {
-            Logger.getLogger(BaseDatos.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(BaseDatos_old.class.getName()).log(Level.SEVERE, null, ex);
         } catch(SQLException ex) {
-            Logger.getLogger(BaseDatos.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(BaseDatos_old.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -98,11 +99,11 @@ public class BaseDatos
                     stat.executeUpdate(sqlInsertArray[i]);
                 //Tablas creadas correctamente
             } catch (FileNotFoundException ex1) {
-                Logger.getLogger(BaseDatos.class.getName()).log(Level.SEVERE, null, ex1);
+                Logger.getLogger(BaseDatos_old.class.getName()).log(Level.SEVERE, null, ex1);
             } catch (SQLException ex2) {
-                Logger.getLogger(BaseDatos.class.getName()).log(Level.SEVERE, null, ex2);
+                Logger.getLogger(BaseDatos_old.class.getName()).log(Level.SEVERE, null, ex2);
             } catch (IOException ioe) {
-                Logger.getLogger(BaseDatos.class.getName()).log(Level.SEVERE, null, ioe);
+                Logger.getLogger(BaseDatos_old.class.getName()).log(Level.SEVERE, null, ioe);
             }
         }
     }
@@ -119,7 +120,6 @@ public class BaseDatos
         return resultadosConsulta;
     }
 }
-
 class BaseDatosAmazon
 {
     private Connection conexionBD;
