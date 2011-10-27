@@ -8,12 +8,12 @@ import java.util.regex.Pattern;
  *
  * @author Jaime Bárez y Miguel González
  */
-public class Diccionario
+public class Diccionario_old
 {
     ArrayList<String []> palabras;
     ArrayList<String []> bd;
 
-    public Diccionario()
+    public Diccionario_old()
     {
         palabras = new ArrayList<String []>();
         bd = new ArrayList<String []>();
