@@ -64,7 +64,7 @@ public class Diccionario {
                 //Si hemos llegado al final de la cadena inicial, guardamos nuestra palabra no separadora
                 if(i==longMiCadena-1){
                     
-                    miArrayList.add(new TuplaPalabra(noSeparadora, false));
+                    miArrayList.add(new Tupla(noSeparadora, false));
                 }
                 
             }
@@ -74,11 +74,11 @@ public class Diccionario {
                 //Si existe la guardamos y vaciamos nuestra palabra auxiliar
                 if(!noSeparadora.equalsIgnoreCase("")) {
                     
-                    miArrayList.add(new TuplaPalabra(noSeparadora, false));
+                    miArrayList.add(new Tupla(noSeparadora, false));
                     noSeparadora="";
                 }
                 //Añadimos al arraylist nuestra palabra separadora
-                miArrayList.add(new TuplaPalabra(Character.toString(subCadena.charAt(0)), true));
+                miArrayList.add(new Tupla(Character.toString(subCadena.charAt(0)), true));
             }
             
         }
