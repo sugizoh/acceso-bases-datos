@@ -49,7 +49,7 @@ public class Diccionario {
         
         String subCadena= new String();
         
-        //Auxiliar que usamos para ir guardando palabras no reservadas
+        //Auxiliar que usamos para ir guardando palabras no separadoras
         String noSeparadora = "";
         
         
@@ -57,11 +57,11 @@ public class Diccionario {
             //Vamos analizando la cadena mediante una subcadena que cada vez se hace más pequeña
             subCadena = miCadena.substring(i, longMiCadena);
             
-            //Si no hay una palabra reservada al principio
+            //Si no hay una palabra separadora al principio
             if(!esSeparadora(subCadena)) {
                 //Añadimos letras de la cadena con la que trabajamos a nuestro prototipo de palabra no separadora
                 noSeparadora = noSeparadora.concat(Character.toString(subCadena.charAt(0)));
-                //Si hemos llegado al final de la cadena inicial, guardamos nuestra palabra no reservada
+                //Si hemos llegado al final de la cadena inicial, guardamos nuestra palabra no separadora
                 if(i==longMiCadena-1){
                     
                     miArrayList.add(new TuplaPalabra(noSeparadora, false));
@@ -77,7 +77,7 @@ public class Diccionario {
                     miArrayList.add(new TuplaPalabra(noSeparadora, false));
                     noSeparadora="";
                 }
-                //Añadimos al arraylist nuestra palabra reservada
+                //Añadimos al arraylist nuestra palabra separadora
                 miArrayList.add(new TuplaPalabra(Character.toString(subCadena.charAt(0)), true));
             }
             
