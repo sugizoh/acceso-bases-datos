@@ -8,7 +8,8 @@ import java.util.logging.Logger;
 
 /**
  *
- * @author JaimeInves
+ * @author Bárez
+ * Clase principal del programa
  */
 public class Main {
 
@@ -16,7 +17,7 @@ public class Main {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        // TODO code application logic here
+        
         Diccionario miDiccionario = new Diccionario();
         String mensaje = new String();
         String palabra = new String();
@@ -33,7 +34,7 @@ public class Main {
         System.out.println("Tamaño del array(comprobación): " + miArray.size() + "\n");
         for (int i=0; i<miArray.size(); i++)
         {            
-            System.out.println(((tuplaPalabra)miArray.get(i)).getPalabra() + "-> " + ((tuplaPalabra)miArray.get(i)).isEsReservada());
+            System.out.println(((TuplaPalabra)miArray.get(i)).getPalabra() + "-> " + ((TuplaPalabra)miArray.get(i)).isEsReservada());
         }
     }
 }

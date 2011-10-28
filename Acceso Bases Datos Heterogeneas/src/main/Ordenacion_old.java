@@ -1,15 +1,15 @@
 package main;
 
-public class Ordenacion
+
+//Algoritmo de ordenación por mezcla
+//Sacado
+//http://es.wikipedia.org/wiki/Ordenamiento_por_mezcla
+public class Ordenacion_old
 {
     public static String [] ordenarString(String []palabras) {
         return Ordenamiento_por_mezcla.OrdenaMerge(palabras);
     }
 }
-
-//Algoritmo de ordenación por mezcla
-//Sacado
-//http://es.wikipedia.org/wiki/Ordenamiento_por_mezcla
 class Ordenamiento_por_mezcla{
      public static String[] OrdenaMerge(String[] L) {
         int n = L.length;
