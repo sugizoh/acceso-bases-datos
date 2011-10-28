@@ -34,7 +34,7 @@ public class Main {
         System.out.println("Tamaño del array(comprobación): " + miArray.size() + "\n");
         for (int i=0; i<miArray.size(); i++)
         {            
-            System.out.println(((TuplaPalabra)miArray.get(i)).getPalabra() + "-> " + ((TuplaPalabra)miArray.get(i)).isEsReservada());
+            System.out.println(((Tupla)miArray.get(i)).getPalabra() + "-> " + ((Tupla)miArray.get(i)).isEsReservada());
         }
     }
 }
