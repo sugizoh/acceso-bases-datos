@@ -1,7 +1,13 @@
 package main;
+import BD.BaseDatos_old;
+import java.sql.Statement;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -13,10 +19,33 @@ import java.util.logging.Logger;
  */
 public class Main {
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String[] args) {
+    private Connection conexionBD;
+    private Statement stat;
+    private ResultSet rs;
+    public Main() {
+        
+        
+        
+        try
+        {
+            Class.forName("org.sqlite.JDBC");
+
+            //Abrimos una conexión con la base de datos
+            conexionBD = DriverManager.getConnection("jdbc:sqlite:BDLibros.db");
+
+            stat = conexionBD.createStatement();
+            /*rs = stat.executeQuery("select * from Amazon;");*/
+            /*rs.close();
+             * v
+             */conexionBD.close();
+
+            //Creamos el objeto para manejar la base de datos de amazon
+            /*bdAmazon = new BaseDatosAmazon(conexionBD);*/
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(BaseDatos_old.class.getName()).log(Level.SEVERE, null, ex);
+        } catch(SQLException ex) {
+            Logger.getLogger(BaseDatos_old.class.getName()).log(Level.SEVERE, null, ex);
+        }
         
         Diccionario miDiccionario = new Diccionario();
         String mensaje = new String();
@@ -36,5 +65,11 @@ public class Main {
         {            
             System.out.println(((Tupla)miArray.get(i)).getPalabra() + "-> " + ((Tupla)miArray.get(i)).isEsReservada());
         }
+    }
+    /**
+     * @param args the command line arguments
+     */
+    public static void main(String[] args) {
+         Main principal = new Main();
     }
 }
