@@ -1,5 +1,6 @@
 package main;
 import BD.BaseDatos_old;
+import XML.XML_Parser;
 import java.sql.Statement;
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -23,9 +24,10 @@ public class Main {
     private Statement stat;
     private ResultSet rs;
     public Main() {
-        
-        
-        
+
+        XML_Parser xml = new XML_Parser();
+        System.out.println("La traducción de titulo es: " + xml.getTraduccionPalabra("titulo"));
+
         try
         {
             Class.forName("org.sqlite.JDBC");
@@ -46,23 +48,23 @@ public class Main {
         } catch(SQLException ex) {
             Logger.getLogger(BaseDatos_old.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
+
         Diccionario miDiccionario = new Diccionario();
         String mensaje = new String();
         String palabra = new String();
-        
+
         System.out.println("Introduzca una expresion:");
-        
-        
+
+
         InputStreamReader isr = new InputStreamReader(System.in);
         BufferedReader br = new BufferedReader (isr);
         try {palabra = br.readLine();}
         catch (IOException ex) {Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);}
-        
+
         ArrayList miArray = miDiccionario.desmembrar(palabra);
         System.out.println("Tamaño del array(comprobación): " + miArray.size() + "\n");
         for (int i=0; i<miArray.size(); i++)
-        {            
+        {
             System.out.println(((Tupla)miArray.get(i)).getPalabra() + "-> " + ((Tupla)miArray.get(i)).isEsReservada());
         }
     }

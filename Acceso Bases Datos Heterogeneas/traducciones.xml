@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+    Document   : traducciones.xml
+    Created on : 2 de noviembre de 2011, 16:03
+    Author     : Miguel Gonzalez y Jaime Bárez
+    Description:
+        Proporciona las traducciones al esquema virtual para acceder a diversas bases de datos.
+-->
+
+<BaseDatos>
+    <basedatos id="amazon">
+        <Libro>Amazon</Libro>
+        <idLibro>idLibro</idLibro>
+        <titulo>tituloLibro</titulo>
+        <editorial>editorial</editorial>
+        <ISBN>NULL</ISBN>
+        <paginas>numPaginas</paginas>
+        <stock>enStock</stock>
+        <precio>precio</precio>
+        <descripcion>descripcion</descripcion>
+        <fotografia>fotografia</fotografia>
+        <fechaEdicion>fechaEdicion</fechaEdicion>
+        <sinopsis>sinopsis</sinopsis>
+        <idAutor>idAutor</idAutor>
+        <autor>nombreAutor</autor>
+        <apellidos>apellidosAutor</apellidos>
+        <lugarNacimiento>lugarNacimiento</lugarNacimiento>
+        <fechaNacimiento>fechaNacimiento</fechaNacimiento>
+    </basedatos>
+    <basedatos id="casadellibro">
+        <Libro>CasaDelLibro</Libro>
+        <idLibro>idLibro</idLibro>
+        <titulo>titulo</titulo>
+        <editorial>NULL</editorial>
+        <ISBN>ISBN</ISBN>
+        <paginas>numPaginas</paginas>
+        <stock>NULL</stock>
+        <precio>NULL</precio>
+        <descripcion>descripcion</descripcion>
+        <fotografia>fotografia</fotografia>
+        <fechaEdicion>fechaEdicion</fechaEdicion>
+        <sinopsis>sinopsis</sinopsis>
+        <idAutor>idAutor</idAutor>
+        <autor>nombreAutor</autor>
+        <apellidos>apellidosAutor</apellidos>
+        <lugarNacimiento>lugarNacimiento</lugarNacimiento>
+        <fechaNacimiento>fechaNacimiento</fechaNacimiento>
+    </basedatos>
+</BaseDatos>
