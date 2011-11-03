@@ -24,7 +24,7 @@ import org.xml.sax.SAXException;
  */
 public class Configuracion
 {
-HashMap<String,ConfiguracionXML> configuraciones;
+    HashMap<String,ConfiguracionXML> configuraciones;
 
     public Configuracion()
     {

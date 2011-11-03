@@ -1,7 +1,7 @@
 package Utilidades;
 /**
  *
- * @author Jaime Bárez
+ * @author Jaime Bárez y Miguel González
  * Clase que consiste en un String y un Boolean(usaermos true si la palabra es separador)
  */
 public class Tupla {
@@ -11,7 +11,7 @@ public class Tupla {
     
     Tupla(String miPalabra, Boolean esSeparador) {
         setPalabra(miPalabra);
-        setEsReservada(esSeparador);
+        setEsSeparador(esSeparador);
     }
 
     /**
@@ -31,14 +31,14 @@ public class Tupla {
     /**
      * @return esSeparador
      */
-    public boolean isEsReservada() {
+    public boolean isEsSeparador() {
         return esSeparador;
     }
 
     /**
      * @param esSeparador el esSeparador a establecer
      */
-    private void setEsReservada(boolean esSeparador) {
+    private void setEsSeparador(boolean esSeparador) {
         this.esSeparador = esSeparador;
     }
 } 

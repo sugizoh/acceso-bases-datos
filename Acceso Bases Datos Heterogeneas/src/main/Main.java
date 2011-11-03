@@ -2,6 +2,7 @@ package main;
 import Utilidades.Tupla;
 import Utilidades.Analizador;
 import BD.BaseDatos_old;
+import Utilidades.LecturaTeclado;
 import XML.Configuracion;
 import XML.Diccionario;
 import java.sql.Statement;
@@ -18,61 +19,26 @@ import java.util.logging.Logger;
 
 /**
  *
- * @author Bárez        miDiccionario.
+ * @author Jaime Bárez y Miguel González
  * Clase principal del programa
  */
 public class Main {
 
-    private Connection conexionBD;
-    private Statement stat;
-    private ResultSet rs;
+    LecturaTeclado lectura;
+    Traductor traductor;
+
     public Main() {
+        
+        traductor = new Traductor();
+        lectura = new LecturaTeclado();
+        
+        System.out.println("Escribe la consulta SQL:");
+        String consultaSQL = lectura.leetTexto();
 
-        Diccionario xml = new Diccionario();
-        System.out.println("La traducción de titulo es: " + xml.getTraduccionPalabra("amazon", "author"));
+        ArrayList<String> traducciones = traductor.getConsultasTraducidas(consultaSQL);
 
-        Configuracion config = new Configuracion();
-        System.out.println("El acceso a la base de datos amazon es: " + config.getValor("casadellibro", "usuario"));
-
-        try
-        {
-            Class.forName("org.sqlite.JDBC");
-
-            //Abrimos una conexión con la base de datos
-            conexionBD = DriverManager.getConnection("jdbc:sqlite:BDLibros.db");
-
-            stat = conexionBD.createStatement();
-            /*rs = stat.executeQuery("select * from Amazon;");*/
-            /*rs.close();
-             * v
-             */conexionBD.close();
-
-            //Creamos el objeto para manejar la base de datos de amazon
-            /*bdAmazo        miDiccionario.n = new BaseDatosAmazon(conexionBD);*/
-        } catch (ClassNotFoundException ex) {
-            Logger.getLogger(BaseDatos_old.class.getName()).log(Level.SEVERE, null, ex);
-        } catch(SQLException ex) {
-            Logger.getLogger(BaseDatos_old.class.getName()).log(Level.SEVERE, null, ex);
-        }
-
-        Analizador miAnalizador = new Analizador();
-        String mensaje = new String();
-        String palabra = new String();
-
-        System.out.println("Introduzca una expresion:");
-
-
-        InputStreamReader isr = new InputStreamReader(System.in);
-        BufferedReader br = new BufferedReader (isr);
-        try {palabra = br.readLine();}
-        catch (IOException ex) {Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);}
-
-        ArrayList miArray = miAnalizador.desmembrar(palabra);
-        System.out.println("Tamaño del array(comprobación): " + miArray.size() + "\n");
-        for (int i=0; i<miArray.size(); i++)
-        {
-            System.out.println(((Tupla)miArray.get(i)).getPalabra() + "-> " + ((Tupla)miArray.get(i)).isEsReservada());
-        }
+        for(int i=0; i<traducciones.size(); i++)
+            System.out.println(traducciones.get(i));
     }
     /**
      * @param args the command line arguments
