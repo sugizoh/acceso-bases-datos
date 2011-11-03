@@ -1,4 +1,4 @@
-package main;
+package Utilidades;
 import java.util.ArrayList;
 
 /**
@@ -17,7 +17,7 @@ public class Analizador {
      * @param miCadena
      * @return Boolean, que es true si es separadora
      */
-    Boolean esSeparadora(String miCadena) {
+    private Boolean esSeparadora(String miCadena) {
         //Presuponemos que no es separadora
         Boolean es = false;
         
@@ -31,9 +31,6 @@ public class Analizador {
         return es;
     }
     
-    
-    
-    
     /**
      * Desmiembra una cadena en un ArrayList de dos columnas: 
      * La primera para las distintas palabras y la segunda para un valor Boolean
@@ -41,17 +38,14 @@ public class Analizador {
      * @param miCadena Cadena a desmembrar
      * @return ArrayList de palabras y Boolean que representa si es separadora o no
      */
-    ArrayList desmembrar(String miCadena) {
+    public ArrayList desmembrar(String miCadena) {
         
         int longMiCadena = miCadena.length();
-        
         ArrayList miArrayList = new ArrayList();
-        
         String subCadena= new String();
         
         //Auxiliar que usamos para ir guardando palabras no separadoras
         String noSeparadora = "";
-        
         
         for (int i=0; i<longMiCadena; i++) {
             //Vamos analizando la cadena mediante una subcadena que cada vez se hace más pequeña
@@ -72,7 +66,6 @@ public class Analizador {
                 //Comprobamos que no existiera una no separadora de antes sin guardar.
                 //Si existe la guardamos y vaciamos nuestra palabra auxiliar
                 if(!noSeparadora.equalsIgnoreCase("")) {
-                    
                     miArrayList.add(new Tupla(noSeparadora, false));
                     noSeparadora="";
                 }
@@ -82,10 +75,6 @@ public class Analizador {
             
         }
 
-        
         return miArrayList;
     }
-    
-    
-    
 }
