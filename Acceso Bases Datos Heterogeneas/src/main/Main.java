@@ -1,5 +1,6 @@
 package main;
 import BD.BaseDatos_old;
+import XML.Configuracion;
 import XML.Diccionario;
 import java.sql.Statement;
 import java.io.BufferedReader;
@@ -27,6 +28,9 @@ public class Main {
 
         Diccionario xml = new Diccionario();
         System.out.println("La traducción de titulo es: " + xml.getTraduccionPalabra("amazon", "author"));
+
+        Configuracion config = new Configuracion();
+        System.out.println("El acceso a la base de datos amazon es: " + config.getValor("casadellibro", "usuario"));
 
         try
         {
