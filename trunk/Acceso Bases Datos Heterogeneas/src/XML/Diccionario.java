@@ -8,6 +8,8 @@ package XML;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.w3c.dom.Element;
@@ -83,13 +85,33 @@ public class Diccionario
 
     public ArrayList<String> getNombresDiccionarios() {
         ArrayList<String> diccionarios = new ArrayList<String>();
-        for(int i=0; i<traducciones.size(); i++)
-            diccionarios.add(traducciones.get(i).getNombreTraduccion());
+
+        //Iteramos obteniendo las claves
+        Iterator it = traducciones.entrySet().iterator();
+        while (it.hasNext()) {
+            Map.Entry e = (Map.Entry)it.next();
+            diccionarios.add(e.getKey().toString());
+        }
+
         return diccionarios;
     }
 
     public int numDiccionarios() {
         return traducciones.size();
+    }
+
+    public String getNombreDiccionario(int posicion) {
+        //Iteramos para obtener la clave en la posición iterada
+        int posActual = 0;
+        String hashCode = null;
+        Iterator it = traducciones.entrySet().iterator();
+        while (it.hasNext() && posActual <= posicion) {
+            posActual++;
+            Map.Entry e = (Map.Entry)it.next();
+            hashCode = e.getKey().toString();
+        }
+
+        return hashCode;
     }
 }
 

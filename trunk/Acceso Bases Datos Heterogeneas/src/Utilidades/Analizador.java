@@ -3,7 +3,7 @@ import java.util.ArrayList;
 
 /**
  *
- * @author Jaime Bárez
+ * @author Jaime Bárez y Miguel González
  */
 public class Analizador {
     
@@ -38,10 +38,10 @@ public class Analizador {
      * @param miCadena Cadena a desmembrar
      * @return ArrayList de palabras y Boolean que representa si es separadora o no
      */
-    public ArrayList desmembrar(String miCadena) {
+    public ArrayList<Tupla> desmembrar(String miCadena) {
         
         int longMiCadena = miCadena.length();
-        ArrayList miArrayList = new ArrayList();
+        ArrayList<Tupla> miArrayList = new ArrayList<Tupla>();
         String subCadena= new String();
         
         //Auxiliar que usamos para ir guardando palabras no separadoras
