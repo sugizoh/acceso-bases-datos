@@ -25,11 +25,11 @@ import org.xml.sax.SAXException;
  */
 public class Diccionario
 {
-    ArrayList<TraduccionXML> traducciones;
+    HashMap<String,TraduccionXML> traducciones;
 
     public Diccionario()
     {
-        traducciones = new ArrayList<TraduccionXML>();
+        traducciones = new HashMap<String,TraduccionXML>();
         
         try {
             // 1. Obteher el objeto DocumentBuilderFactory
@@ -62,7 +62,7 @@ public class Diccionario
                         }
 
                     //4. Creamos la traducción
-                    traducciones.add(new TraduccionXML(tuplas, (Element) nl.item(i), nombreTraduccion));
+                    traducciones.put(nombreTraduccion, new TraduccionXML(tuplas, (Element) nl.item(i), nombreTraduccion));
                 }
             }
         } catch (SAXException ex) {
@@ -74,8 +74,12 @@ public class Diccionario
         }
     }
 
-    public String getTraduccionPalabra(String palabra) {
-        return traducciones.get(0).getTraduccionPalabra(palabra);
+    public String getTraduccionPalabra(String idioma, String palabra) {
+        String traduccion = traducciones.get(idioma).getTraduccionPalabra(palabra);
+        if(traduccion == null)
+            return palabra;
+        else
+            return traduccion;
     }
 }
 
