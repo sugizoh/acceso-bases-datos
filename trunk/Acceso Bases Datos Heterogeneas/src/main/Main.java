@@ -1,6 +1,6 @@
 package main;
 import BD.BaseDatos_old;
-import XML.XML_Parser;
+import XML.Diccionario;
 import java.sql.Statement;
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -15,7 +15,7 @@ import java.util.logging.Logger;
 
 /**
  *
- * @author Bárez
+ * @author Bárez        miDiccionario.
  * Clase principal del programa
  */
 public class Main {
@@ -25,7 +25,7 @@ public class Main {
     private ResultSet rs;
     public Main() {
 
-        XML_Parser xml = new XML_Parser();
+        Diccionario xml = new Diccionario();
         System.out.println("La traducción de titulo es: " + xml.getTraduccionPalabra("titulo"));
 
         try
@@ -42,14 +42,14 @@ public class Main {
              */conexionBD.close();
 
             //Creamos el objeto para manejar la base de datos de amazon
-            /*bdAmazon = new BaseDatosAmazon(conexionBD);*/
+            /*bdAmazo        miDiccionario.n = new BaseDatosAmazon(conexionBD);*/
         } catch (ClassNotFoundException ex) {
             Logger.getLogger(BaseDatos_old.class.getName()).log(Level.SEVERE, null, ex);
         } catch(SQLException ex) {
             Logger.getLogger(BaseDatos_old.class.getName()).log(Level.SEVERE, null, ex);
         }
 
-        Diccionario miDiccionario = new Diccionario();
+        Analizador miAnalizador = new Analizador();
         String mensaje = new String();
         String palabra = new String();
 
@@ -61,7 +61,7 @@ public class Main {
         try {palabra = br.readLine();}
         catch (IOException ex) {Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);}
 
-        ArrayList miArray = miDiccionario.desmembrar(palabra);
+        ArrayList miArray = miAnalizador.desmembrar(palabra);
         System.out.println("Tamaño del array(comprobación): " + miArray.size() + "\n");
         for (int i=0; i<miArray.size(); i++)
         {

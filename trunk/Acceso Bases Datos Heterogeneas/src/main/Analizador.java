@@ -5,10 +5,10 @@ import java.util.ArrayList;
  *
  * @author Jaime Bárez
  */
-public class Diccionario {
+public class Analizador {
     
     //String de palabras separadoras separadas por el caracter ¬
-    private final String palabrasSeparadoras = " ¬,¬;¬=¬>¬<¬(¬)¬\"¬*¬+¬-¬\\¬/";
+    private final String palabrasSeparadoras = " ¬,¬.¬;¬=¬>¬<¬(¬)¬\"¬*¬+¬-¬\\¬/";
     //Array de palabras separadoras
     private final String arraySeparadoras[] = palabrasSeparadoras.split("¬");
     

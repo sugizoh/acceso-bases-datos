@@ -7,27 +7,27 @@ package XML;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Hashtable;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.w3c.dom.Element;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
-import org.w3c.dom.Node;
 import org.w3c.dom.Document;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
 /**
  *
- * @author paracaidista
+ * @author Miguel González y Jaime Bárez
  */
-public class XML_Parser
+public class Diccionario
 {
-    private Document dom;
     ArrayList<TraduccionXML> traducciones;
 
-    public XML_Parser()
+    public Diccionario()
     {
         traducciones = new ArrayList<TraduccionXML>();
         
@@ -37,7 +37,7 @@ public class XML_Parser
             // 2. Usar DocumentBuilderFactory para crear un DocumentBuilder
             DocumentBuilder db = dbf.newDocumentBuilder();
             // 3. Parsear a partir de un archivo
-            dom = db.parse("traducciones.xml");
+            Document dom = db.parse("traducciones.xml");
 
             // 1. Obtener el documento raiz
             Element docEle = dom.getDocumentElement();
@@ -46,7 +46,10 @@ public class XML_Parser
 
             if (nl != null && nl.getLength() > 0) {
                 for (int i = 0; i < nl.getLength(); i++) {
-                    //Obtenemos los nombres de las tuplas
+                    //3. Obtenemos el valor de basedatos (el nombre de la traduccion)
+                    String nombreTraduccion = ((Element) nl.item(i)).getAttribute("id");
+                    
+                    //3. Obtenemos los nombres de las tuplas
                     ArrayList<String> tuplas = new ArrayList<String>();
 
                     NodeList hijos = nl.item(i).getChildNodes();
@@ -58,16 +61,16 @@ public class XML_Parser
                                 tuplas.add(hijos.item(j).getNodeName());
                         }
 
-                    //Creamos la traducción
-                    traducciones.add(new TraduccionXML(tuplas, (Element) nl.item(i)));
+                    //4. Creamos la traducción
+                    traducciones.add(new TraduccionXML(tuplas, (Element) nl.item(i), nombreTraduccion));
                 }
             }
         } catch (SAXException ex) {
-            Logger.getLogger(XML_Parser.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(Diccionario.class.getName()).log(Level.SEVERE, null, ex);
         } catch (IOException ex) {
-            Logger.getLogger(XML_Parser.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(Diccionario.class.getName()).log(Level.SEVERE, null, ex);
         } catch (ParserConfigurationException ex) {
-            Logger.getLogger(XML_Parser.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(Diccionario.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -76,18 +79,24 @@ public class XML_Parser
     }
 }
 
+//Contiene una traducción de un diccionario
 class TraduccionXML
 {
-    ArrayList<TuplaTraduccion> palabras;
+    HashMap<String,String> palabras;
+    String nombreTraduccion;
 
-    public TraduccionXML(ArrayList<String> tuplas, Element elemento) {
-        palabras = new ArrayList<TuplaTraduccion>();
+    //Se rellena el diccionario
+    public TraduccionXML(ArrayList<String> tuplas, Element elemento, String nombreTraduccion) {
+        palabras = new HashMap<String,String>();
+        this.nombreTraduccion = nombreTraduccion;
         
         for(int i=0; i<tuplas.size(); i++) {
-            palabras.add(new TuplaTraduccion(tuplas.get(i), obtenerTexto(elemento, tuplas.get(i))));
+            palabras.put(tuplas.get(i), obtenerTexto(elemento, tuplas.get(i)));
         }
     }
 
+    //Se le pasa elemento que contiene un listado de hijos. Se busca el nodo dado por el nombreEtiqueta
+    //Y se accede al contenido de su valor
     private String obtenerTexto(Element elemento, String nombreEtiqueta) {
         String texto = null;
 
@@ -99,35 +108,8 @@ class TraduccionXML
         return texto;
     }
 
+    //Se devuelve la traducción de una palabra
     public String getTraduccionPalabra(String palabra) {
-        String traduccion = null;
-
-        //Buscamos la palabra
-        for(int i=0; i<palabras.size() && traduccion == null; i++)
-        {
-            if(palabras.get(i).getPalabraOriginal().equals(palabra)) //Si es la palabra buscada
-                traduccion = palabras.get(i).getPalabraTraducida(); //Obtenemos su traducción
-        }
-
-        return traduccion;
-    }
-}
-
-class TuplaTraduccion
-{
-    private String palabraOriginal;
-    private String palabraTraducida;
-
-    public TuplaTraduccion(String palabraOriginal, String palabraTraducida) {
-        this.palabraOriginal = palabraOriginal;
-        this.palabraTraducida = palabraTraducida;
-    }
-
-    public String getPalabraOriginal() {
-        return palabraOriginal;
-    }
-
-    public String getPalabraTraducida() {
-        return palabraTraducida;
+        return (String) palabras.get(palabra);
     }
 }
