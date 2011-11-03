@@ -1,36 +1,25 @@
 package Utilidades;
 import java.util.ArrayList;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  *
  * @author Jaime Bárez y Miguel González
  */
 public class Analizador {
-    
-    //String de palabras separadoras separadas por el caracter ¬
-    private final String palabrasSeparadoras = " ¬,¬.¬;¬=¬>¬<¬(¬)¬\"¬*¬+¬-¬\\¬/";
-    //Array de palabras separadoras
-    private final String arraySeparadoras[] = palabrasSeparadoras.split("¬");
-    
-    /**
-     * 
-     * @param miCadena
-     * @return Boolean, que es true si es separadora
-     */
-    private Boolean esSeparadora(String miCadena) {
-        //Presuponemos que no es separadora
-        Boolean es = false;
-        
-        //Comparamos nuestra cadena a ver si empieza con alguna de las palabras separadoras
-        for (int i=0; i<arraySeparadoras.length && !es; i++) {
-            if(miCadena.startsWith(arraySeparadoras[i]))
-            {
-                es = true;
-            }
-        }
-        return es;
+
+    private final String palabrasSeparadoras;
+    private final String palabrasSeparadorasRegex;
+
+    public Analizador()
+    {
+        //Letras que son separadores
+        palabrasSeparadoras = " ,.;=><()\"*+-\\/";
+        //Creamos la expresión regular. O no contiene la palabra separadoras Ó contiene separadores
+        palabrasSeparadorasRegex = "[^" + palabrasSeparadoras + "]+|[" + palabrasSeparadoras + "]+";
     }
-    
+
     /**
      * Desmiembra una cadena en un ArrayList de dos columnas: 
      * La primera para las distintas palabras y la segunda para un valor Boolean
@@ -39,40 +28,21 @@ public class Analizador {
      * @return ArrayList de palabras y Boolean que representa si es separadora o no
      */
     public ArrayList<Tupla> desmembrar(String miCadena) {
-        
-        int longMiCadena = miCadena.length();
+
         ArrayList<Tupla> miArrayList = new ArrayList<Tupla>();
-        String subCadena= new String();
-        
-        //Auxiliar que usamos para ir guardando palabras no separadoras
-        String noSeparadora = "";
-        
-        for (int i=0; i<longMiCadena; i++) {
-            //Vamos analizando la cadena mediante una subcadena que cada vez se hace más pequeña
-            subCadena = miCadena.substring(i, longMiCadena);
-            
-            //Si no hay una palabra separadora al principio
-            if(!esSeparadora(subCadena)) {
-                //Añadimos letras de la cadena con la que trabajamos a nuestro prototipo de palabra no separadora
-                noSeparadora = noSeparadora.concat(Character.toString(subCadena.charAt(0)));
-                //Si hemos llegado al final de la cadena inicial, guardamos nuestra palabra no separadora
-                if(i==longMiCadena-1) {
-                    miArrayList.add(new Tupla(noSeparadora, false));
-                }
-                
-            }
-            //Si la primera palabra de la cadena que estamos analizando es palabra separadora
-            else {
-                //Comprobamos que no existiera una no separadora de antes sin guardar.
-                //Si existe la guardamos y vaciamos nuestra palabra auxiliar
-                if(!noSeparadora.equalsIgnoreCase("")) {
-                    miArrayList.add(new Tupla(noSeparadora, false));
-                    noSeparadora="";
-                }
-                //Añadimos al arraylist nuestra palabra separadora
-                miArrayList.add(new Tupla(Character.toString(subCadena.charAt(0)), true));
-            }
-            
+
+        Pattern patron = Pattern.compile(palabrasSeparadorasRegex);
+        Matcher encaja = patron.matcher(miCadena);
+
+        while(encaja.find())
+        {
+            String palabraEncajada = miCadena.substring(encaja.start(), encaja.end());
+
+            //Si el primer digito está en palabrasSeparadoras es un separador la cadena
+            if(palabrasSeparadoras.contains(palabraEncajada.valueOf(0)))
+                miArrayList.add(new Tupla(palabraEncajada, true));
+            else
+                miArrayList.add(new Tupla(palabraEncajada, false));
         }
 
         return miArrayList;
