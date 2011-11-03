@@ -26,7 +26,7 @@ public class Main {
     public Main() {
 
         Diccionario xml = new Diccionario();
-        System.out.println("La traducción de titulo es: " + xml.getTraduccionPalabra("titulo"));
+        System.out.println("La traducción de titulo es: " + xml.getTraduccionPalabra("amazon", "author"));
 
         try
         {
