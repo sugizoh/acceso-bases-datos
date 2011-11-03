@@ -62,8 +62,7 @@ public class Analizador {
                 //Añadimos letras de la cadena con la que trabajamos a nuestro prototipo de palabra no separadora
                 noSeparadora = noSeparadora.concat(Character.toString(subCadena.charAt(0)));
                 //Si hemos llegado al final de la cadena inicial, guardamos nuestra palabra no separadora
-                if(i==longMiCadena-1){
-                    
+                if(i==longMiCadena-1) {
                     miArrayList.add(new Tupla(noSeparadora, false));
                 }
                 
