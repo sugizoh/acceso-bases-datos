@@ -1,4 +1,6 @@
 package main;
+import Utilidades.Tupla;
+import Utilidades.Analizador;
 import BD.BaseDatos_old;
 import XML.Configuracion;
 import XML.Diccionario;
