@@ -49,21 +49,29 @@ public class Diccionario
                 for (int i = 0; i < nl.getLength(); i++) {
                     //3. Obtenemos el valor de basedatos (el nombre de la traduccion)
                     String nombreTraduccion = ((Element) nl.item(i)).getAttribute("id");
-                    
-                    //3. Obtenemos los nombres de las tuplas
-                    ArrayList<String> tuplas = new ArrayList<String>();
 
+                    //Creamos una traducción
+                    TraduccionXML traduccion = new TraduccionXML(nombreTraduccion);
+
+                    //Obtenemos los hijos de la traducción
                     NodeList hijos = nl.item(i).getChildNodes();
 
-                    if(hijos != null && hijos.getLength() > 0)
+                    //Recorremos todos los hijos
+                    if(hijos != null && hijos.getLength() > 0) {
                         for(int j=0; j<hijos.getLength(); j++)
                         {
-                            if(!hijos.item(j).getNodeName().equals("#text"))
-                                tuplas.add(hijos.item(j).getNodeName());
+                            if(!hijos.item(j).getNodeName().equals("#text")) {
+                                //Obtenemos el nombre de la traducción
+                                String nombreValorTraduccion = (String)hijos.item(j).getNodeName();
+                                //Obtenemos la palabra traducida
+                                String traduccionPalabra = obtenerTexto((Element) nl.item(i), nombreValorTraduccion);
+                                traduccion.add(nombreValorTraduccion, traduccionPalabra);
+                            }
                         }
+                    }
 
-                    //4. Creamos la traducción
-                    traducciones.put(nombreTraduccion, new TraduccionXML(tuplas, (Element) nl.item(i), nombreTraduccion));
+                    //Añadimos la traducción
+                    traducciones.put(nombreTraduccion, traduccion);
                 }
             }
         } catch (SAXException ex) {
@@ -73,6 +81,17 @@ public class Diccionario
         } catch (ParserConfigurationException ex) {
             Logger.getLogger(Diccionario.class.getName()).log(Level.SEVERE, null, ex);
         }
+    }
+
+     private String obtenerTexto(Element elemento, String nombreEtiqueta) {
+        String texto = null;
+
+        NodeList nl = elemento.getElementsByTagName(nombreEtiqueta);
+        if (nl != null && nl.getLength() > 0) {
+            Element el = (Element) nl.item(0);
+            texto = el.getFirstChild().getNodeValue();
+        }
+        return texto;
     }
 
     public String getTraduccionPalabra(String idioma, String palabra) {
@@ -121,27 +140,15 @@ class TraduccionXML
     HashMap<String,String> palabras;
     String nombreTraduccion;
 
-    //Se rellena el diccionario
-    public TraduccionXML(ArrayList<String> tuplas, Element elemento, String nombreTraduccion) {
+    public TraduccionXML(String nombreTraduccion)
+    {
         palabras = new HashMap<String,String>();
         this.nombreTraduccion = nombreTraduccion;
-        
-        for(int i=0; i<tuplas.size(); i++) {
-            palabras.put(tuplas.get(i), obtenerTexto(elemento, tuplas.get(i)));
-        }
     }
 
-    //Se le pasa elemento que contiene un listado de hijos. Se busca el nodo dado por el nombreEtiqueta
-    //Y se accede al contenido de su valor
-    private String obtenerTexto(Element elemento, String nombreEtiqueta) {
-        String texto = null;
-
-        NodeList nl = elemento.getElementsByTagName(nombreEtiqueta);
-        if (nl != null && nl.getLength() > 0) {
-            Element el = (Element) nl.item(0);
-            texto = el.getFirstChild().getNodeValue();
-        }
-        return texto;
+    public void add(String nombreValorTraducido, String nombreTraducido)
+    {
+        palabras.put(nombreValorTraducido, nombreTraducido);
     }
 
     //Se devuelve la traducción de una palabra

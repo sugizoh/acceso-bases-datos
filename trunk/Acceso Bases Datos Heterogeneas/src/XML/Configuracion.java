@@ -48,20 +48,28 @@ public class Configuracion
                     //3. Obtenemos el valor de basedatos (el nombre de la traduccion)
                     String nombreBD = ((Element) nl.item(i)).getAttribute("id");
 
-                    //3. Obtenemos los nombres de las tuplas
-                    ArrayList<String> tuplas = new ArrayList<String>();
+                    //Creamos una configuración
+                    ConfiguracionXML conf = new ConfiguracionXML(nombreBD);
 
+                    //Obtenemos los hijos de la configuración
                     NodeList hijos = nl.item(i).getChildNodes();
-
-                    if(hijos != null && hijos.getLength() > 0)
+                    if(hijos != null && hijos.getLength() > 0) {
+                        //Recorremos todos los hijos para obtener sus valores
                         for(int j=0; j<hijos.getLength(); j++)
                         {
-                            if(!hijos.item(j).getNodeName().equals("#text"))
-                                tuplas.add(hijos.item(j).getNodeName());
+                            if(!hijos.item(j).getNodeName().equals("#text")) {
+                                //Nombre de la configuración
+                                String datoConfiguracion = hijos.item(j).getNodeName();
+                                //Valor de la configuración
+                                String valorConfiguracion = obtenerTexto((Element) nl.item(i),datoConfiguracion);
+                                //Añadimos el valor de la configuración
+                                conf.add(datoConfiguracion, valorConfiguracion);
+                            }
                         }
+                    }
 
-                    //4. Creamos la configuración
-                    configuraciones.put(nombreBD, new ConfiguracionXML(tuplas, (Element) nl.item(i), nombreBD));
+                    //Añadimos la configuración
+                    configuraciones.put(nombreBD,conf);
                 }
             }
         } catch (SAXException ex) {
@@ -73,6 +81,16 @@ public class Configuracion
         }
     }
 
+    private String obtenerTexto(Element elemento, String nombreEtiqueta) {
+        String texto = null;
+
+        NodeList nl = elemento.getElementsByTagName(nombreEtiqueta);
+        if (nl != null && nl.getLength() > 0) {
+            Element el = (Element) nl.item(0);
+            texto = el.getFirstChild().getNodeValue();
+        }
+        return texto;
+    }
 
     public String getValor(String baseDatos, String valor) {
         String valorBD = configuraciones.get(baseDatos).getValor(valor);
@@ -99,27 +117,13 @@ class ConfiguracionXML
     HashMap<String,String> valores;
     String nombreBD;
 
-    //Se rellena el diccionario
-    public ConfiguracionXML(ArrayList<String> tuplas, Element elemento, String nombreBD) {
+    public ConfiguracionXML(String nombreBD) {
         valores = new HashMap<String,String>();
         this.nombreBD = nombreBD;
-
-        for(int i=0; i<tuplas.size(); i++) {
-            valores.put(tuplas.get(i), obtenerTexto(elemento, tuplas.get(i)));
-        }
     }
 
-    //Se le pasa elemento que contiene un listado de hijos. Se busca el nodo dado por el nombreValor
-    //Y se accede al contenido de su valor
-    private String obtenerTexto(Element elemento, String nombreValor) {
-        String texto = null;
-
-        NodeList nl = elemento.getElementsByTagName(nombreValor);
-        if (nl != null && nl.getLength() > 0) {
-            Element el = (Element) nl.item(0);
-            texto = el.getFirstChild().getNodeValue();
-        }
-        return texto;
+    public void add(String datoConfiguracion, String valorConfiguracion) {
+        valores.put(datoConfiguracion, valorConfiguracion);
     }
 
     //Se devuelve la traducción de una palabra
