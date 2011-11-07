@@ -95,11 +95,17 @@ public class Diccionario
     }
 
     public String getTraduccionPalabra(String idioma, String palabra) {
-        String traduccion = traducciones.get(idioma).getTraduccionPalabra(palabra);
+        TraduccionXML traduccion = traducciones.get(idioma);
+        String traduccionObtenida = null;
         if(traduccion == null)
             return palabra;
         else
-            return traduccion;
+            traduccionObtenida =  traduccion.getTraduccionPalabra(palabra);
+
+        if(traduccionObtenida == null)
+            traduccionObtenida = palabra;
+        
+        return traduccionObtenida;
     }
 
     public ArrayList<String> getNombresDiccionarios() {

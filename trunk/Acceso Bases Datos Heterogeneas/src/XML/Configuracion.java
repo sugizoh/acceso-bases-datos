@@ -8,6 +8,8 @@ package XML;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.w3c.dom.Document;
@@ -93,18 +95,24 @@ public class Configuracion
     }
 
     public String getValor(String baseDatos, String valor) {
-        String valorBD = configuraciones.get(baseDatos).getValor(valor);
-        if(valorBD == null)
-            return valor;
+        ConfiguracionXML configuracion = configuraciones.get(baseDatos);
+        if(configuracion == null)
+            return null;
         else
-            return valorBD;
+            return configuracion.getValor(valor);
     }
 
     public ArrayList<String> getBaseDatos() {
-        ArrayList<String> diccionarios = new ArrayList<String>();
-        for(int i=0; i<configuraciones.size(); i++)
-            diccionarios.add(configuraciones.get(i).getNombreBD());
-        return diccionarios;
+        ArrayList<String> basesDatos = new ArrayList<String>();
+
+        //Iteramos obteniendo las claves
+        Iterator it = configuraciones.entrySet().iterator();
+        while (it.hasNext()) {
+            Map.Entry e = (Map.Entry)it.next();
+            basesDatos.add(e.getKey().toString());
+        }
+
+        return basesDatos;
     }
 
     public int numBaseDatos() {
