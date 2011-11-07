@@ -1,6 +1,7 @@
 package main;
 import Utilidades.LecturaTeclado;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 /**
  *
@@ -21,10 +22,9 @@ public class Main {
         //SELECT idLibro, titulo, ISBN, paginas, stock, fechaEdicion FROM Libro;
         String consultaSQL = lectura.leerTexto();
 
-        ArrayList<String> traducciones = traductor.getConsultasTraducidas(consultaSQL);
+        HashMap<String, String> traducciones = traductor.getConsultasTraducidas(consultaSQL);
 
-        for(int i=0; i<traducciones.size(); i++)
-            System.out.println(traducciones.get(i));
+        
 
         /*
          * Ahora faltaría crear una clase BD [la cula emplea la clase Configuracion para realizar las conexiones, y segun el tipo de conexion
