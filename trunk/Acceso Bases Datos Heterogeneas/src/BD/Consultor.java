@@ -5,8 +5,12 @@
 package BD;
 
 import XML.Configuracion;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -18,7 +22,26 @@ public class Consultor {
         Configuracion config = new Configuracion();
         BD baseDatos = new BD();
         for(int i=0; i<config.numBaseDatos(); i++) {
-            baseDatos.abrirBD(null, null, null);
+            String nombreBD = config.getNombreBaseDatos(i);
+            baseDatos.abrirBD(config.getValor(nombreBD, "conexion"), config.getValor(nombreBD, "usuario"), config.getValor(nombreBD, "password"));
+            ResultSet rsConsulta = baseDatos.consultar(sentenciasSQL.get(nombreBD));
+            try {
+                int numColumnas = rsConsulta.getMetaData().getColumnCount();
+                while (rsConsulta.next()) {
+                    String tupla = "";
+                    for(int j=0; j<numColumnas; j++) {
+                        String valor = rsConsulta.getString(j).toString();//MIRAR
+                        tupla += valor + " ";
+                    }
+                    tuplas.add(tupla);
+                }
+            } catch (SQLException ex) {
+                Logger.getLogger(Consultor.class.getName()).log(Level.SEVERE, null, ex);
+            }
+                    //
+                    //Obtener blablabla
+                    //
+            baseDatos.cerrar();
         }
         
         //sentenciasSQL.get(this)
