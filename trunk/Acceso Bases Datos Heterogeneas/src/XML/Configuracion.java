@@ -145,12 +145,12 @@ class ConfiguracionXML
     }
 
     public void add(String datoConfiguracion, String valorConfiguracion) {
-        valores.put(datoConfiguracion, valorConfiguracion);
+        valores.put(datoConfiguracion.toUpperCase(), valorConfiguracion);
     }
 
     //Se devuelve la traducción de una palabra
     public String getValor(String key) {
-        return (String) valores.get(key);
+        return (String) valores.get(key.toUpperCase());
     }
 
     public String getNombreBD() {

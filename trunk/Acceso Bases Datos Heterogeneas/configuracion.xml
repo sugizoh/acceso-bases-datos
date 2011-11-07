@@ -10,14 +10,12 @@
 
 <Configuracion>
     <basedatos id="amazon">
-        <conexion>jdbc:mysql://localhost/Amazon</conexion>
-        <tabla>amazon</tabla>
+        <conexion>jdbc:mysql://localhost/BDLibros</conexion>
         <usuario>root</usuario>
         <password>root</password>
     </basedatos>
     <basedatos id="casadellibro">
-        <conexion>jdbc:mysql://localhost/CasaDelLibro</conexion>
-        <tabla>casadellibro</tabla>
+        <conexion>jdbc:mysql://localhost/BDLibros</conexion>
         <usuario>root</usuario>
         <password>root</password>
     </basedatos>

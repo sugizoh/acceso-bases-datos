@@ -29,7 +29,7 @@ public class Consultor {
                 int numColumnas = rsConsulta.getMetaData().getColumnCount();
                 while (rsConsulta.next()) {
                     String tupla = "";
-                    for(int j=0; j<numColumnas; j++) {
+                    for(int j=1; j<=numColumnas; j++) {
                         String valor = rsConsulta.getString(j).toString();//MIRAR
                         tupla += valor + " ";
                     }

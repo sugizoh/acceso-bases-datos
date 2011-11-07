@@ -25,7 +25,10 @@ public class Main {
 
         HashMap<String, String> traducciones = traductor.getConsultasTraducidas(consultaSQL);
         Consultor consultor = new Consultor();
-        
+        ArrayList<String> resultados = consultor.lanzarConsulta(traducciones);
+
+        for(int i=0; i<resultados.size(); i++)
+            System.out.println(resultados.get(i));
     }
     /**
      * @param args the command line arguments

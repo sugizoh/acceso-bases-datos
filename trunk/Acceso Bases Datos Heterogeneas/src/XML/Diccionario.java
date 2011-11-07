@@ -154,12 +154,12 @@ class TraduccionXML
 
     public void add(String nombreValorTraducido, String nombreTraducido)
     {
-        palabras.put(nombreValorTraducido, nombreTraducido);
+        palabras.put(nombreValorTraducido.toUpperCase(), nombreTraducido);
     }
 
     //Se devuelve la traducción de una palabra
     public String getTraduccionPalabra(String palabra) {
-        return (String) palabras.get(palabra);
+        return (String) palabras.get(palabra.toUpperCase());
     }
 
     public String getNombreTraduccion() {
