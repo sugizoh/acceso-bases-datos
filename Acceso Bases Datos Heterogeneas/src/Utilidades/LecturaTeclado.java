@@ -17,7 +17,7 @@ import java.util.logging.Logger;
  */
 public class LecturaTeclado
 {
-    public String leetTexto() {
+    public String leerTexto() {
         String palabra = null;
         InputStreamReader isr = new InputStreamReader(System.in);
         BufferedReader br = new BufferedReader (isr);
