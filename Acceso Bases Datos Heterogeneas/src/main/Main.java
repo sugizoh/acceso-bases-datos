@@ -19,7 +19,7 @@ public class Main {
         System.out.println("Escribe la consulta SQL:");
         //SELECT DE PRUEBA, por ej.
         //SELECT idLibro, titulo, ISBN, paginas, stock, fechaEdicion FROM Libro;
-        String consultaSQL = lectura.leetTexto();
+        String consultaSQL = lectura.leerTexto();
 
         ArrayList<String> traducciones = traductor.getConsultasTraducidas(consultaSQL);
 
