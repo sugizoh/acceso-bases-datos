@@ -39,7 +39,7 @@ public class Analizador {
             String palabraEncajada = miCadena.substring(encaja.start(), encaja.end());
 
             //Si el primer digito está en palabrasSeparadoras es un separador la cadena
-            if(palabrasSeparadoras.contains(palabraEncajada.valueOf(0)))
+            if(palabrasSeparadoras.contains(String.valueOf(palabraEncajada.charAt(0))))
                 miArrayList.add(new Tupla(palabraEncajada, true));
             else
                 miArrayList.add(new Tupla(palabraEncajada, false));
