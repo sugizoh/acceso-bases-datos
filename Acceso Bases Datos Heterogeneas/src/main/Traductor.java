@@ -9,6 +9,7 @@ import Utilidades.Analizador;
 import Utilidades.Tupla;
 import XML.Diccionario;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 /**
  *
@@ -26,22 +27,24 @@ public class Traductor
         analizador = new Analizador();
     }
 
-    public ArrayList<String> getConsultasTraducidas(String consultaSQL) {
-        ArrayList<String> consultasTraducidas = new ArrayList<String>();
+    public HashMap<String, String> getConsultasTraducidas(String consultaSQL) {
+        HashMap<String, String> consultasTraducidas = new HashMap<String, String>();
 
         ArrayList<Tupla> consultaTroceada = analizador.desmembrar(consultaSQL);
 
         //Recorremos todos los diccionarios y vamos creando las consultas traducidas
         for(int i=0; i<diccionario.numDiccionarios(); i++) {
             String cadenaSqlTraducida = "";
+            String nombreDiccionario = diccionario.getNombreDiccionario(i);
             for(int j=0; j<consultaTroceada.size(); j++) {
                 if(consultaTroceada.get(j).isEsSeparador()) { //Si es reservada no hacemos nada
                     cadenaSqlTraducida += consultaTroceada.get(j).getPalabra();
                 } else { //Si no lo es
-                    cadenaSqlTraducida += diccionario.getTraduccionPalabra(diccionario.getNombreDiccionario(i),consultaTroceada.get(j).getPalabra());
+                    cadenaSqlTraducida += diccionario.getTraduccionPalabra(nombreDiccionario,consultaTroceada.get(j).getPalabra());
                 }
             }
-            consultasTraducidas.add(cadenaSqlTraducida);
+            consultasTraducidas.put(nombreDiccionario, cadenaSqlTraducida);
+            
         }
 
         return consultasTraducidas;
