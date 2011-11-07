@@ -13,7 +13,7 @@ public class Main {
 
     LecturaTeclado lectura;
     Traductor traductor;
- 
+
     public Main() {
         traductor = new Traductor();
         lectura = new LecturaTeclado();
