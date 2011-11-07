@@ -15,7 +15,7 @@ public class Analizador {
     public Analizador()
     {
         //Letras que son separadores
-        palabrasSeparadoras = " ,.;=><()\"*+-\\/";
+        palabrasSeparadoras = " ,.;=><()*+-\\/";
         //Creamos la expresión regular. O no contiene la palabra separadoras Ó contiene separadores
         palabrasSeparadorasRegex = "[^" + palabrasSeparadoras + "]+|[" + palabrasSeparadoras + "]+";
     }
