@@ -118,6 +118,20 @@ public class Configuracion
     public int numBaseDatos() {
         return configuraciones.size();
     }
+
+    public String getNombreBaseDatos(int posicion) {
+        //Iteramos para obtener la clave en la posición iterada
+        int posActual = 0;
+        String hashCode = null;
+        Iterator it = configuraciones.entrySet().iterator();
+        while (it.hasNext() && posActual <= posicion) {
+            posActual++;
+            Map.Entry e = (Map.Entry)it.next();
+            hashCode = e.getKey().toString();
+        }
+
+        return hashCode;
+    }
 }
 
 class ConfiguracionXML
