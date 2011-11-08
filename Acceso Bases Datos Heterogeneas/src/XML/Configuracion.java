@@ -18,6 +18,7 @@ import org.w3c.dom.Element;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.soap.Node;
 import org.xml.sax.SAXException;
 
 /**
@@ -59,7 +60,7 @@ public class Configuracion
                         //Recorremos todos los hijos para obtener sus valores
                         for(int j=0; j<hijos.getLength(); j++)
                         {
-                            if(!hijos.item(j).getNodeName().equals("#text")) {
+                            if(hijos.item(j).getNodeType() == Node.ELEMENT_NODE) {
                                 //Nombre de la configuración
                                 String datoConfiguracion = hijos.item(j).getNodeName();
                                 //Valor de la configuración

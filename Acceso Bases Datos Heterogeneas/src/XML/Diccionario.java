@@ -16,6 +16,7 @@ import org.w3c.dom.Element;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.soap.Node;
 import org.w3c.dom.Document;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
@@ -60,7 +61,7 @@ public class Diccionario
                     if(hijos != null && hijos.getLength() > 0) {
                         for(int j=0; j<hijos.getLength(); j++)
                         {
-                            if(!hijos.item(j).getNodeName().equals("#text")) {
+                            if(hijos.item(j).getNodeType() == Node.ELEMENT_NODE) {
                                 //Obtenemos el nombre de la traducción
                                 String nombreValorTraduccion = (String)hijos.item(j).getNodeName();
                                 //Obtenemos la palabra traducida
