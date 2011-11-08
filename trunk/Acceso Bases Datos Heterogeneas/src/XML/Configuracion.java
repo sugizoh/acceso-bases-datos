@@ -52,7 +52,7 @@ public class Configuracion
                     String nombreBD = ((Element) nl.item(i)).getAttribute("id");
 
                     //Creamos una configuración
-                    ConfiguracionXML conf = new ConfiguracionXML(nombreBD);
+                    ConfiguracionXML conf = new ConfiguracionXML();
 
                     //Obtenemos los hijos de la configuración
                     NodeList hijos = nl.item(i).getChildNodes();
@@ -138,11 +138,9 @@ public class Configuracion
 class ConfiguracionXML
 {
     HashMap<String,String> valores;
-    String nombreBD;
 
-    public ConfiguracionXML(String nombreBD) {
+    public ConfiguracionXML() {
         valores = new HashMap<String,String>();
-        this.nombreBD = nombreBD;
     }
 
     public void add(String datoConfiguracion, String valorConfiguracion) {
@@ -152,9 +150,5 @@ class ConfiguracionXML
     //Se devuelve la traducción de una palabra
     public String getValor(String key) {
         return (String) valores.get(key.toUpperCase());
-    }
-
-    public String getNombreBD() {
-        return nombreBD;
     }
 }
