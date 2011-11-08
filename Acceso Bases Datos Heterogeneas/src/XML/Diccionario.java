@@ -52,7 +52,7 @@ public class Diccionario
                     String nombreTraduccion = ((Element) nl.item(i)).getAttribute("id");
 
                     //Creamos una traducción
-                    TraduccionXML traduccion = new TraduccionXML(nombreTraduccion);
+                    TraduccionXML traduccion = new TraduccionXML();
 
                     //Obtenemos los hijos de la traducción
                     NodeList hijos = nl.item(i).getChildNodes();
@@ -145,12 +145,10 @@ public class Diccionario
 class TraduccionXML
 {
     HashMap<String,String> palabras;
-    String nombreTraduccion;
 
-    public TraduccionXML(String nombreTraduccion)
+    public TraduccionXML()
     {
         palabras = new HashMap<String,String>();
-        this.nombreTraduccion = nombreTraduccion;
     }
 
     public void add(String nombreValorTraducido, String nombreTraducido)
@@ -161,9 +159,5 @@ class TraduccionXML
     //Se devuelve la traducción de una palabra
     public String getTraduccionPalabra(String palabra) {
         return (String) palabras.get(palabra.toUpperCase());
-    }
-
-    public String getNombreTraduccion() {
-        return nombreTraduccion;
     }
 }
