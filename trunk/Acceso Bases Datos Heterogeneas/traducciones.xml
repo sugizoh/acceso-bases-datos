@@ -11,10 +11,11 @@
 <BaseDatos>
     <basedatos id="amazon">
         <Libro>Amazon</Libro>
+        <Autor>Autor</Autor>
         <idLibro>idLibro</idLibro>
         <titulo>tituloLibro</titulo>
         <editorial>editorial</editorial>
-        <ISBN>NULL</ISBN>
+        <ISBN>"NULL"</ISBN>
         <paginas>numPaginas</paginas>
         <stock>enStock</stock>
         <precio>precio</precio>
@@ -23,26 +24,27 @@
         <fechaEdicion>fechaEdicion</fechaEdicion>
         <sinopsis>sinopsis</sinopsis>
         <idAutor>idAutor</idAutor>
-        <autor>nombreAutor</autor>
+        <nombreAutor>nombreAutor</nombreAutor>
         <apellidos>apellidosAutor</apellidos>
         <lugarNacimiento>lugarNacimiento</lugarNacimiento>
         <fechaNacimiento>fechaNacimiento</fechaNacimiento>
     </basedatos>
     <basedatos id="casadellibro">
         <Libro>CasaDelLibro</Libro>
+        <Autor>Autor</Autor>
         <idLibro>idLibro</idLibro>
         <titulo>titulo</titulo>
-        <editorial>NULL</editorial>
+        <editorial>"NULL"</editorial>
         <ISBN>ISBN</ISBN>
         <paginas>numPaginas</paginas>
-        <stock>NULL</stock>
-        <precio>NULL</precio>
+        <stock>"NULL"</stock>
+        <precio>"NULL"</precio>
         <descripcion>descripcion</descripcion>
         <fotografia>fotografia</fotografia>
         <fechaEdicion>fechaEdicion</fechaEdicion>
         <sinopsis>sinopsis</sinopsis>
         <idAutor>idAutor</idAutor>
-        <autor>nombreAutor</autor>
+        <nombreAutor>nombreAutor</nombreAutor>
         <apellidos>apellidosAutor</apellidos>
         <lugarNacimiento>lugarNacimiento</lugarNacimiento>
         <fechaNacimiento>fechaNacimiento</fechaNacimiento>
