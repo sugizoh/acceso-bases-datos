@@ -16,8 +16,8 @@ public class Analizador {
     {
         //Letras que son separadores
         palabrasSeparadoras = " ,.;=><()*+-\\/";
-        //Creamos la expresión regular. O no contiene la palabra separadoras Ó contiene separadores
-        palabrasSeparadorasRegex = "[^" + palabrasSeparadoras + "]+|[" + palabrasSeparadoras + "]+";
+        //Creamos la expresión regular. O no contiene la palabra separadoras Ó contiene separadores Ó contiene nombres de columna entre comillas
+        palabrasSeparadorasRegex = "[^" + palabrasSeparadoras + "]+|[" + palabrasSeparadoras + "]+|`[.]+`";
     }
 
     /**
