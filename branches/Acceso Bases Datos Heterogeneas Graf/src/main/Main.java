@@ -1,6 +1,6 @@
 package main;
 import BD.Consultor;
-import GUI.modeloTabla;
+import GUI.ModeloTabla;
 import Utilidades.LecturaTeclado;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
@@ -38,18 +38,18 @@ public class Main extends JFrame {
         this.setLayout(null);
 
         JLabel lblConsulta = new JLabel("Consulta sql");
-        lblConsulta.setBounds(20,0,580,40);
+        lblConsulta.setBounds(20,0,980,40);
         lblConsulta.setVisible(true);
         this.add(lblConsulta);
 
         txtConsulta = new JTextArea("SELECT * FROM LIBRO;");
-        txtConsulta.setBounds(5, 30, 580, 60);
+        txtConsulta.setBounds(5, 30, 980, 60);
         txtConsulta.setAlignmentX(TOP_ALIGNMENT);
         txtConsulta.setVisible(true);
         this.add(txtConsulta);
 
         JLabel lblResultados = new JLabel("Resultados consulta");
-        lblResultados.setBounds(20,110,580,40);
+        lblResultados.setBounds(20,110,980,40);
         lblResultados.setVisible(true);
         this.add(lblResultados);
 
@@ -63,7 +63,7 @@ public class Main extends JFrame {
         String datos[][] = {{""}};
         String col[] = {"Resultados..."};
 
-        modeloTabla tableModel = new modeloTabla(datos,col);
+        ModeloTabla tableModel = new ModeloTabla(datos,col);
 
         tablaResultados = new JTable(datos,col);
         tablaResultados.setVisible(true);
@@ -74,7 +74,7 @@ public class Main extends JFrame {
 
         pane = new JScrollPane(tablaResultados);
         pane.setVisible(true);
-        pane.setBounds(10,150, 570, 200);
+        pane.setBounds(10,150, 970, 200);
 
         this.add(pane);
         
@@ -85,60 +85,32 @@ public class Main extends JFrame {
     public static void main(String[] args) {
          JFrame principal = new Main("Consulta base de datos");
          principal.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-         principal.setBounds(50, 50, 600, 400);
+         principal.setBounds(100, 50, 1000, 400);
          principal.setVisible(true);
     }
 }
 
 class eventosBotones implements ActionListener
 {
-    Traductor traductor;
-    LecturaTeclado lectura;
-    JTextArea txtConsulta;
-    JTable tablaResultados;
     Main main;
 
     public eventosBotones(Main main) {
         this.main = main;
-        this.traductor = main.traductor;
-        this.txtConsulta = main.txtConsulta;
-        this.lectura = main.lectura;
-        this.tablaResultados = main.tablaResultados;
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
         
-        String consultaSQL = txtConsulta.getText();
+        String consultaSQL = main.txtConsulta.getText();
 
-        traductor = new Traductor();
-
-        lectura = new LecturaTeclado();
-
+        Traductor traductor = new Traductor();
         HashMap<String, String> traducciones = traductor.getConsultasTraducidas(consultaSQL);
+        
         Consultor consultor = new Consultor();
-        ArrayList<String> resultados = consultor.lanzarConsulta(traducciones);
 
-        String[][] datos = new String[resultados.size()][1];
+        ModeloTabla tableModel = consultor.lanzarConsulta(traducciones);
 
-        //Rellenamos los datos
-        String col[] = {"Resultados..."};
-        for(int i=0; i<resultados.size(); i++) {
-            datos[i][0] = resultados.get(i);
-        }
-
-        modeloTabla tableModel = new modeloTabla(datos,col);
         main.tablaResultados.setModel(tableModel);
-
-        
-        //main.tablaResultados = new JTable(datos, col);
-        
-        //main.tablaResultados = new JTable(datos, col);
-        //main.tablaResultados.setVisible(true);
-        //main.tablaResultados.repaint();
-        //main.pane.repaint();
-        //main.pane.setVisible(false);
-        //main.repaint();
     }
 
 }
