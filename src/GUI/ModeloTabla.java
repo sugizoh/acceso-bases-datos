@@ -14,7 +14,7 @@ import javax.swing.table.AbstractTableModel;
  *
  * @author Miguel González y Jaime Bárez
  */
-public class modeloTabla extends AbstractTableModel {
+public class ModeloTabla extends AbstractTableModel {
 
   private HashMap<Point,String> lookup;
 
@@ -24,7 +24,7 @@ public class modeloTabla extends AbstractTableModel {
 
   private final String headers[];
 
-  public modeloTabla(String datos[][], String columnHeaders[]) {
+  public ModeloTabla(String datos[][], String columnHeaders[]) {
     lookup = new HashMap<Point,String>();
 
     //Rellenamos los datos
