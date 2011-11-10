@@ -29,7 +29,7 @@ public class Diccionario extends XML
         if(traduccion == null)
             return palabra;
         else
-            traduccionObtenida =  traduccion.get(palabra);
+            traduccionObtenida =  traduccion.get(palabra.toUpperCase());
 
         if(traduccionObtenida == null)
             traduccionObtenida = palabra;

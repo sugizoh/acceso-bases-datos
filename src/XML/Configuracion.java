@@ -27,7 +27,7 @@ public class Configuracion extends XML
         if(configuracion == null)
             return null;
         else
-            return configuracion.get(valor);
+            return configuracion.get(valor.toUpperCase());
     }
 
     public ArrayList<String> getBaseDatos() {

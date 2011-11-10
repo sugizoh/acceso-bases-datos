@@ -1,5 +1,6 @@
 package main;
 import BD.Consultor;
+import GUI.modeloTabla;
 import Utilidades.LecturaTeclado;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
@@ -15,6 +16,7 @@ import javax.swing.JTable;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.table.JTableHeader;
+import javax.swing.table.TableModel;
 
 /**
  *
@@ -27,6 +29,8 @@ public class Main extends JFrame {
     Traductor traductor;
     JTextArea txtConsulta;
     JButton btnEjecutarConsulta;
+    JTable tablaResultados;
+    JScrollPane pane;
 
     public Main(String nombrePrograma) {
         super(nombrePrograma);
@@ -54,28 +58,26 @@ public class Main extends JFrame {
         btnEjecutarConsulta.setVisible(true);
         this.add(btnEjecutarConsulta);
 
-        
-
         btnEjecutarConsulta.addActionListener(new eventosBotones(this));
 
-        /*
-        traductor = new Traductor();
-        lectura = new LecturaTeclado();
+        String datos[][] = {{""}};
+        String col[] = {"Resultados..."};
+
+        modeloTabla tableModel = new modeloTabla(datos,col);
+
+        tablaResultados = new JTable(datos,col);
+        tablaResultados.setVisible(true);
+
+        JTableHeader header = tablaResultados.getTableHeader();
+        header.setBackground(Color.yellow);
+        header.setVisible(true);
+
+        pane = new JScrollPane(tablaResultados);
+        pane.setVisible(true);
+        pane.setBounds(10,150, 570, 200);
+
+        this.add(pane);
         
-        System.out.println("Escribe la consulta SQL:");
-        //SELECT DE PRUEBA, por ej.
-        //SELECT idLibro, titulo, ISBN, paginas, stock, fechaEdicion FROM Libro;
-        String consultaSQL = lectura.leerTexto();
-
-        HashMap<String, String> traducciones = traductor.getConsultasTraducidas(consultaSQL);
-        Consultor consultor = new Consultor();
-        ArrayList<String> resultados = consultor.lanzarConsulta(traducciones);
-
-        for(int i=0; i<resultados.size(); i++)
-            System.out.println(resultados.get(i));
-
-
-         */
     }
     /**
      * @param args the command line arguments
@@ -93,6 +95,7 @@ class eventosBotones implements ActionListener
     Traductor traductor;
     LecturaTeclado lectura;
     JTextArea txtConsulta;
+    JTable tablaResultados;
     Main main;
 
     public eventosBotones(Main main) {
@@ -100,6 +103,7 @@ class eventosBotones implements ActionListener
         this.traductor = main.traductor;
         this.txtConsulta = main.txtConsulta;
         this.lectura = main.lectura;
+        this.tablaResultados = main.tablaResultados;
     }
 
     @Override
@@ -115,40 +119,26 @@ class eventosBotones implements ActionListener
         Consultor consultor = new Consultor();
         ArrayList<String> resultados = consultor.lanzarConsulta(traducciones);
 
-        String[] columnNames = {"Consultas"};
         String[][] datos = new String[resultados.size()][1];
 
         //Rellenamos los datos
-        for(int i=0; i<resultados.size(); i++)
-        {
-            datos[i][0] = resultados.get(i);;
+        String col[] = {"Resultados..."};
+        for(int i=0; i<resultados.size(); i++) {
+            datos[i][0] = resultados.get(i);
         }
 
-        JTable tabla = new JTable(datos, columnNames);
-        JTableHeader header = tabla.getTableHeader();
-        header.setBackground(Color.yellow);
+        modeloTabla tableModel = new modeloTabla(datos,col);
+        main.tablaResultados.setModel(tableModel);
 
-        JScrollPane pane = new JScrollPane(tabla);
-        tabla.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
-
-        pane.setVisible(true);
-        tabla.setVisible(true);
-
-        JPanel panel = new JPanel();
-
-        JButton btn = new JButton("Gas");
-        btn.setVisible(true);
-        panel.add(btn);
-
-        panel.setBounds(0, 0, 580, 260);
-
-        panel.add(pane);
-        panel.setVisible(true);
-
-        main.add(pane);
-         
-
-        main.repaint();
+        
+        //main.tablaResultados = new JTable(datos, col);
+        
+        //main.tablaResultados = new JTable(datos, col);
+        //main.tablaResultados.setVisible(true);
+        //main.tablaResultados.repaint();
+        //main.pane.repaint();
+        //main.pane.setVisible(false);
+        //main.repaint();
     }
 
 }
