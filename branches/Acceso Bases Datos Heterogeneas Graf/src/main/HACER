@@ -1,0 +1,48 @@
+1- Configurar el crawdler para importar datos de dos páginas distintas
+    y generar el SQL para la inserción de los datos en la BD
+
+2- Crear clases para manejo de base de datos por separado
+
+3- Crear clase para unificar ambas bases de datos
+
+5- Crear interfaz gráfica para el manejo del programa
+
+REVISAR COMENTARIOS
+
+//Lista de palabras reservadas separadas por el símbolo ¬
+    //No usamos la coma para separar, ya que la consideramos reservada
+    //-------------------------
+    //-----------REVISAR----------------
+    //---------------------
+    private final String palabrasReservadas = " ¬,¬;¬=¬>¬<¬(¬)¬\"¬*¬+¬-¬\\¬/¬SELECT¬FROM¬WHERE¬CHAT¬CONCAT¬FIELD¬FORMAT¬HEX¬INSERT¬INSTR¬LCASE¬LEFT¬LIKE¬LOCATE¬LOWER¬LPAD¬LTRIM¬MATCH¬MID¬NOT¬ORD¬POSITION¬QUOTE¬REPLACE¬REVERSE¬RIGHT¬RLIKE¬RPAD¬RTRIM¬SPACE¬STRCMP¬SUBSTR¬TRIM¬UCASE¬UPPER¬SUBSTRING¬COUNT¬ADD¬ALL¬ALTER¬ANALYZE¬AND¬AS¬ASC¬ASENSITIVE¬BEFORE¬BETWEEN¬BIGINT¬BINARY¬BLOB¬BOTH¬BY¬CALL¬CASCADE¬CASE¬CHANGE¬CHAR¬CHARACTER¬CHECK¬COLLATE¬COLUMN¬CONDITION¬CONSTRAINT¬CONTINUE¬CONVERT¬COUNT¬CREATE¬CROSS¬CURRENT_DATE¬CURRENT_TIME¬CURRENT_TIMESTAMP¬CURRENT_USER¬CURSOR¬DATABASE¬DATABASES¬DAY_HOUR¬DAY_MICROSECOND¬DAY_MINUTE¬DAY_SECOND¬DEC¬DECIMAL¬DECLARE¬DEFAULT¬DELAYED¬DELETE¬DESC¬DESCRIBE¬DETERMINISTIC¬DISTINCT¬DISTINCTROW¬DIV¬DOUBLE¬DROP¬DUAL¬EACH¬ELSE¬ELSEIF¬ENCLOSED¬ESCAPED¬EXISTS¬EXIT¬EXPLAIN¬FALSE¬FETCH¬FLOAT¬FLOAT4¬FLOAT8¬FOR¬FORCE¬FOREIGN¬FROM¬FULLTEXT¬GRANT¬GROUP¬HAVING¬HIGH_PRIORITY¬HOUR_MICROSECOND¬HOUR_MINUTE¬HOUR_SECOND¬IF¬IGNORE¬IN¬INDEX¬INFILE¬INNER¬INOUT¬INSENSITIVE¬INSERT¬INT¬INT1¬INT2¬INT3¬INT4¬INT8¬INTEGER¬INTERVAL¬INTO¬IS¬ITERATE¬JOIN¬KEY¬KEYS¬KILL¬LEADING¬LEAVE¬LEFT¬LIKE¬LIMIT¬LINES¬LOAD¬LOCALTIME¬LOCALTIMESTAMP¬LOCK¬LONG¬LONGBLOB¬LONGTEXT¬LOOP¬LOW_PRIORITY¬MATCH¬MEDIUMBLOB¬MEDIUMINT¬MEDIUMTEXT¬MIDDLEINT¬MINUTE_MICROSECOND¬MINUTE_SECOND¬MOD¬MODIFIES¬NATURAL¬NOT¬NO_WRITE_TO_BINLOG¬NULL¬NUMERIC¬ON¬OPTIMIZE¬OPTION¬OPTIONALLY¬OR¬ORDER¬OUT¬OUTER¬OUTFILE¬PRECISION¬PRIMARY¬PROCEDURE¬PURGE¬READ¬READS¬REAL¬REFERENCES¬REGEXP¬RELEASE¬RENAME¬REPEAT¬REPLACE¬REQUIRE¬RESTRICT¬RETURN¬REVOKE¬RIGHT¬RLIKE¬SCHEMA¬SCHEMAS¬SECOND_MICROSECOND¬SELECT¬SENSITIVE¬SEPARATOR¬SET¬SHOW¬SMALLINT¬SONAME¬SPATIAL¬SPECIFIC¬SQL¬SQLEXCEPTION¬SQLSTATE¬SQLWARNING¬SQL_BIG_RESULT¬SQL_CALC_FOUND_ROWS¬SQL_SMALL_RESULT¬SSL¬STARTING¬STRAIGHT_JOIN¬TABLE¬TERMINATED¬THEN¬TINYBLOB¬TINYINT¬TINYTEXT¬TO¬TRAILING¬TRIGGER¬TRUE¬UNDO¬UNION¬UNIQUE¬UNLOCK¬UNSIGNED¬UPDATE¬USAGE¬USE¬USING¬UTC_DATE¬UTC_TIME¬UTC_TIMESTAMP¬VALUES¬VARBINARY¬VARCHAR¬VARCHARACTER¬VARYING¬WHEN¬WHERE¬WHILE¬WITH¬WRITE¬XOR¬YEAR_MONTH¬ZEROFILL";
+    /*Se ordena el array de mayor a menor para evitar hacer interpretar como 
+    no reservada por. ej. SUBSTR cuando el usuario ha escrito SUBSTRING 
+    que es otra función equivalente de mysql, ya que el array al comparar
+    se recorre de izquierda a derecha*/
+    private final String arrayReservadas[] = Ordenacion.ordenarString(palabrasReservadas.split("¬"));
+
+int esReservada(String miCadena) {
+        //Trabajaremos con una cadena local, que es la recibida pasada a mayúsculas(ya que no importa la capitalización de las letras)
+        String cadenaLocal = miCadena.toUpperCase();
+        //Presuponemos que no es reservada
+        int es = -1;
+        //Lista de palabras reservadas:
+        //String palabrasReservadas = "SELECT, FROM, WHERE, GROUP BY, HAVING, ORDER BY";
+        //Array de palabras reservadas
+        //String arrayReservadas[] = palabrasReservadas.split(", ");
+        
+        //Comparamos nuestra cadena a ver si empieza con alguna de las palabras reservadas
+        for (int i=0; i<arrayReservadas.length && es==-1; i++) {
+            if(cadenaLocal.equals(arrayReservadas[i]))
+            {
+                System.out.println("comparando " + cadenaLocal + "con" +  arrayReservadas[i] + ".");
+                es = arrayReservadas[i].length();
+            }
+        }
+        return es;
+    }
+
+
+
+if(esReservada(noSeparadora)>0) {separadorOReservada=true;}
+                    else{separadorOReservada=false;}

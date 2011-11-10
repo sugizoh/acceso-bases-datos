@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+    Document   : Configuracion.xml
+    Created on : 3 de noviembre de 2011, 15:45
+    Author     : paracaidista
+    Description:
+        Purpose of the document follows.
+-->
+
+<Configuracion>
+    <basedatos id="amazon">
+        <conexion>jdbc:mysql://localhost/Amazon</conexion>
+        <usuario>root</usuario>
+        <password>root</password>
+    </basedatos>
+    <basedatos id="casadellibro">
+        <conexion>jdbc:mysql://localhost/CasaDelLibro</conexion>
+        <usuario>root</usuario>
+        <password>root</password>
+    </basedatos>
+</Configuracion>
