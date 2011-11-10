@@ -10,7 +10,7 @@ import java.util.HashMap;
  * Clase principal del programa
  */
 public class Main {
-
+    //
     LecturaTeclado lectura;
     Traductor traductor;
 
