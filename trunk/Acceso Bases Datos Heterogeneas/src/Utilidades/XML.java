@@ -62,7 +62,7 @@ public class XML
                                 //Valor de la configuración
                                 String valorConfiguracion = obtenerTexto((Element) nl.item(i),datoConfiguracion);
                                 //Añadimos el valor de la configuración
-                                conf.put(datoConfiguracion, valorConfiguracion);
+                                conf.put(datoConfiguracion.toUpperCase(), valorConfiguracion);
                             }
                         }
                     }

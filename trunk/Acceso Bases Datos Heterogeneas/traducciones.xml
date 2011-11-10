@@ -21,7 +21,7 @@
         <precio>precio</precio>
         <descripcion>descripcion</descripcion>
         <fotografia>fotografia</fotografia>
-        <fechaEdicion>fechaEdicion</fechaEdicion>
+        <fechaEdicion>"NULL"</fechaEdicion>
         <sinopsis>sinopsis</sinopsis>
         <idAutor>idAutor</idAutor>
         <nombreAutor>nombreAutor</nombreAutor>
