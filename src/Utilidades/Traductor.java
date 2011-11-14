@@ -3,10 +3,8 @@
  * and open the template in the editor.
  */
 
-package main;
+package Utilidades;
 
-import Utilidades.Analizador;
-import Utilidades.Tupla;
 import XML.Diccionario;
 import java.util.ArrayList;
 import java.util.HashMap;

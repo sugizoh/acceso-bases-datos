@@ -1,22 +1,20 @@
 package main;
+import Utilidades.Traductor;
 import BD.Consultor;
 import GUI.ModeloTabla;
 import Utilidades.LecturaTeclado;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.ArrayList;
 import java.util.HashMap;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
-import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextArea;
-import javax.swing.JTextField;
 import javax.swing.table.JTableHeader;
-import javax.swing.table.TableModel;
 
 /**
  *
@@ -37,24 +35,36 @@ public class Main extends JFrame {
 
         this.setLayout(null);
 
+        JLabel lblEsquema = new JLabel("Esquea de la base de datos:");
+        lblEsquema.setBounds(20,20,400,15);
+        lblEsquema.setVisible(true);
+        this.add(lblEsquema);
+
+        JLabel lblImagenEsquema = new JLabel();
+        lblImagenEsquema.setBounds(10, 40, 980, 80);
+        lblImagenEsquema.setIcon(new ImageIcon("esquemaBD.png"));
+        this.add(lblImagenEsquema);
+
+
         JLabel lblConsulta = new JLabel("Consulta sql");
-        lblConsulta.setBounds(20,0,980,40);
+        lblConsulta.setBounds(20,120,980,40);
         lblConsulta.setVisible(true);
         this.add(lblConsulta);
 
-        txtConsulta = new JTextArea("SELECT * FROM LIBRO;");
-        txtConsulta.setBounds(5, 30, 980, 60);
+        txtConsulta = new JTextArea("SELECT substr(titulo,1,10), editorial, precio, nombreAutor FROM"
+                + " Libro, Autor WHERE Libro.idAutor = Autor.idAutor");
+        txtConsulta.setBounds(5, 160, 980, 60);
         txtConsulta.setAlignmentX(TOP_ALIGNMENT);
         txtConsulta.setVisible(true);
         this.add(txtConsulta);
 
         JLabel lblResultados = new JLabel("Resultados consulta");
-        lblResultados.setBounds(20,110,980,40);
+        lblResultados.setBounds(20,230,980,40);
         lblResultados.setVisible(true);
         this.add(lblResultados);
 
         btnEjecutarConsulta = new JButton("Ejecutar SQL");
-        btnEjecutarConsulta.setBounds(300, 95, 150, 30);
+        btnEjecutarConsulta.setBounds(750, 125, 150, 30);
         btnEjecutarConsulta.setVisible(true);
         this.add(btnEjecutarConsulta);
 
@@ -74,7 +84,7 @@ public class Main extends JFrame {
 
         pane = new JScrollPane(tablaResultados);
         pane.setVisible(true);
-        pane.setBounds(10,150, 970, 200);
+        pane.setBounds(10,270, 970, 200);
 
         this.add(pane);
         
@@ -85,7 +95,7 @@ public class Main extends JFrame {
     public static void main(String[] args) {
          JFrame principal = new Main("Consulta base de datos");
          principal.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-         principal.setBounds(100, 50, 1000, 400);
+         principal.setBounds(100, 50, 1000, 500);
          principal.setVisible(true);
     }
 }
