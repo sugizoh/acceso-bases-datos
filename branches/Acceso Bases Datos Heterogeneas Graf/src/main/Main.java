@@ -7,6 +7,8 @@ import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.HashMap;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -110,17 +112,16 @@ class eventosBotones implements ActionListener
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        
-        String consultaSQL = main.txtConsulta.getText();
-
-        Traductor traductor = new Traductor();
-        HashMap<String, String> traducciones = traductor.getConsultasTraducidas(consultaSQL);
-        
-        Consultor consultor = new Consultor();
-
-        ModeloTabla tableModel = consultor.lanzarConsulta(traducciones);
-
-        main.tablaResultados.setModel(tableModel);
+        try {
+            String consultaSQL = main.txtConsulta.getText();
+            Traductor traductor = new Traductor();
+            HashMap<String, String> traducciones = traductor.getConsultasTraducidas(consultaSQL);
+            Consultor consultor = new Consultor();
+            ModeloTabla tableModel = consultor.lanzarConsulta(traducciones);
+            main.tablaResultados.setModel(tableModel);
+        } catch (Exception ex) {
+            Logger.getLogger(eventosBotones.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
 }
