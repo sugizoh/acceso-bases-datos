@@ -22,14 +22,19 @@ public class Configuracion extends XML
         super("configuracion.xml", "basedatos");
     }
 
+    //Corregido
     public String getValor(String baseDatos, String valor) {
-        HashMap<String,String> configuracion = xmlLeido.get(baseDatos);
-        if(configuracion == null)
-            return null;
-        else
-            return configuracion.get(valor.toUpperCase());
+        //Devolvemos la configuración para esa base de datos
+        HashMap<String,String> configuracion = (HashMap<String,String>) xmlLeido.get(baseDatos);
+        //Si no existe la base de datos
+        if(configuracion == null) {
+            return null; //Devolvemos nulo
+        } else {
+            return configuracion.get(valor.toUpperCase()); //Devolvemos el valor para esa base de datos
+        }
     }
 
+    //Corregido
     public ArrayList<String> getBaseDatos() {
         ArrayList<String> basesDatos = new ArrayList<String>();
 
@@ -43,10 +48,12 @@ public class Configuracion extends XML
         return basesDatos;
     }
 
+    //Corregido
     public int numBaseDatos() {
         return xmlLeido.size();
     }
 
+    //Corregido
     public String getNombreBaseDatos(int posicion) {
         //Iteramos para obtener la clave en la posición iterada
         int posActual = 0;

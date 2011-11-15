@@ -10,43 +10,53 @@
 
 <BaseDatos>
     <basedatos id="amazon">
-        <Libro>Amazon</Libro>
-        <Autor>Autor</Autor>
-        <idLibro>idLibro</idLibro>
-        <titulo>tituloLibro</titulo>
-        <editorial>editorial</editorial>
-        <ISBN>"NULL"</ISBN>
-        <paginas>numPaginas</paginas>
-        <stock>enStock</stock>
-        <precio>precio</precio>
-        <descripcion>descripcion</descripcion>
-        <fotografia>fotografia</fotografia>
-        <fechaEdicion>"NULL"</fechaEdicion>
-        <sinopsis>sinopsis</sinopsis>
-        <idAutor>idAutor</idAutor>
-        <nombreAutor>nombreAutor</nombreAutor>
-        <apellidos>apellidosAutor</apellidos>
-        <lugarNacimiento>lugarNacimiento</lugarNacimiento>
-        <fechaNacimiento>fechaNacimiento</fechaNacimiento>
+        <tabla id="Libro">
+            <Libro>Amazon</Libro>
+            <idLibro>idLibro</idLibro>
+            <titulo>tituloLibro</titulo>
+            <editorial>editorial</editorial>
+            <ISBN>"NULL"</ISBN>
+            <paginas>numPaginas</paginas>
+            <stock>enStock</stock>
+            <precio>precio</precio>
+            <descripcion>descripcion</descripcion>
+            <fotografia>fotografia</fotografia>
+            <fechaEdicion>"NULL"</fechaEdicion>
+            <sinopsis>"NULL"</sinopsis>
+            <idAutor>idAutor</idAutor>
+        </tabla>
+        <tabla id="Autor">
+            <Autor>Autor</Autor>
+            <idAutor>idAutor</idAutor>
+            <nombreAutor>nombreAutor</nombreAutor>
+            <apellidos>apellidosAutor</apellidos>
+            <lugarNacimiento>lugarNacimiento</lugarNacimiento>
+            <fechaNacimiento>nacimiento</fechaNacimiento>
+        </tabla>
     </basedatos>
     <basedatos id="casadellibro">
-        <Libro>CasaDelLibro</Libro>
-        <Autor>Autor</Autor>
-        <idLibro>idLibro</idLibro>
-        <titulo>titulo</titulo>
-        <editorial>"NULL"</editorial>
-        <ISBN>ISBN</ISBN>
-        <paginas>numPaginas</paginas>
-        <stock>"NULL"</stock>
-        <precio>"NULL"</precio>
-        <descripcion>descripcion</descripcion>
-        <fotografia>fotografia</fotografia>
-        <fechaEdicion>fechaEdicion</fechaEdicion>
-        <sinopsis>sinopsis</sinopsis>
-        <idAutor>idAutor</idAutor>
-        <nombreAutor>nombreAutor</nombreAutor>
-        <apellidos>apellidosAutor</apellidos>
-        <lugarNacimiento>lugarNacimiento</lugarNacimiento>
-        <fechaNacimiento>fechaNacimiento</fechaNacimiento>
+        <tabla id="Libro">
+            <Libro>CasaDelLibro</Libro>
+            <idLibro>idLibro</idLibro>
+            <titulo>titulo</titulo>
+            <editorial>"NULL"</editorial>
+            <ISBN>ISBN</ISBN>
+            <paginas>numPaginas</paginas>
+            <stock>"NULL"</stock>
+            <precio>precio * 1.3755</precio>
+            <descripcion>"NULL"</descripcion>
+            <fotografia>fotografia</fotografia>
+            <fechaEdicion>fechaEdicion</fechaEdicion>
+            <sinopsis>sinopsis</sinopsis>
+            <idAutor>idAutor</idAutor>
+        </tabla>
+        <tabla id="Autor">
+            <Autor>Autor</Autor>
+            <idAutor>idAutor</idAutor>
+            <nombreAutor>nombreAutor</nombreAutor>
+            <apellidos>apellidosAutor</apellidos>
+            <lugarNacimiento>lugarNacimiento</lugarNacimiento>
+            <fechaNacimiento>nacimiento</fechaNacimiento>
+        </tabla>
     </basedatos>
 </BaseDatos>

@@ -34,9 +34,11 @@ public class Consultor {
                 numColumnas = rsConsulta.getMetaData().getColumnCount();
 
                 //En la primera base de datos obtenemos los datos de la cabecera de la tabla
-                headTable = new String[numColumnas];
-                for(int j=0; j<numColumnas;j++)
-                    headTable[j] = rsConsulta.getMetaData().getColumnName(j+1);
+                if(i == 0) {
+                    headTable = new String[numColumnas];
+                    for(int j=1; j<= numColumnas;j++)
+                        headTable[j - 1] = rsConsulta.getMetaData().getColumnName(j);
+                }
 
                 int consultaActual = 0;
                 while (rsConsulta.next()) {
