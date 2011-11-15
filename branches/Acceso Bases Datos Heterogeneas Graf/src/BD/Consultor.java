@@ -6,6 +6,7 @@ package BD;
 
 import GUI.ModeloTabla;
 import XML.Configuracion;
+import XML.Diccionario;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -26,6 +27,7 @@ public class Consultor {
 
         Configuracion config = new Configuracion();
         BD baseDatos = new BD();
+        Diccionario diccionario = new Diccionario();
         for(int i=0; i<config.numBaseDatos(); i++) {
             String nombreBD = config.getNombreBaseDatos(i);
             baseDatos.abrirBD(config.getValor(nombreBD, "conexion"), config.getValor(nombreBD, "usuario"), config.getValor(nombreBD, "password"));
@@ -35,9 +37,16 @@ public class Consultor {
 
                 //En la primera base de datos obtenemos los datos de la cabecera de la tabla
                 if(i == 0) {
+                    
                     headTable = new String[numColumnas];
-                    for(int j=1; j<= numColumnas;j++)
-                        headTable[j - 1] = rsConsulta.getMetaData().getColumnName(j);
+                    for(int j=1; j<= numColumnas;j++) {
+                        headTable[j - 1] = diccionario.getTraduccionPalabraAutomaticaInversa(nombreBD, rsConsulta.getMetaData().getColumnName(j));
+                    }
+                } else {
+                    for(int j=1; j<= numColumnas; j++) {
+                        if(headTable[j - 1].equals("NULL"))
+                            headTable[j - 1] = diccionario.getTraduccionPalabraAutomaticaInversa(nombreBD, rsConsulta.getMetaData().getColumnName(j));
+                    }
                 }
 
                 int consultaActual = 0;
