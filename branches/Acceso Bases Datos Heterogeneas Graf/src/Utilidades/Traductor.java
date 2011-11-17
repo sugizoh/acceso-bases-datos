@@ -38,14 +38,13 @@ public class Traductor
             for(int i=0; i<nombresTablas.size(); i++) {
                 String nombreTablaActual = nombresTablas.get(i);
                 if(consultaSQL.toUpperCase().contains(nombreTablaActual)) { //Si contiene la tabla
-                    ArrayList<String> tablas = columnasBD.get(nombresTablas.get(i).toUpperCase());
+                    ArrayList<String> nombreColumnas = columnasBD.get(nombresTablas.get(i).toUpperCase());
 
-                    //COMPROBAR SI PONE BIEN LAS CLAVES AMBIGUAS
-                    for(int j=0; j<tablas.size(); j++) {
-                        if(diccionario.claveAmbigua(tablas.get(j))) {
-                            asteriscoSustituir += nombreTablaActual + "." + tablas.get(j) + ", ";
+                    for(int j=0; j<nombreColumnas.size(); j++) {
+                        if(diccionario.claveAmbigua(nombreColumnas.get(j))) { //Si es clave ambigua
+                            asteriscoSustituir += nombreTablaActual + "." + nombreColumnas.get(j) + ", "; //Ponemos el nombre de la tabla a la que corresponde
                         } else {
-                            asteriscoSustituir += tablas.get(j) + ", ";
+                            asteriscoSustituir += nombreColumnas.get(j) + ", ";
                         }
                     }
                 }
