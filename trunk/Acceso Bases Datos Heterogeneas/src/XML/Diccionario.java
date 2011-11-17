@@ -1,8 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
-
 package XML;
 
 import Utilidades.XML;
@@ -14,6 +9,7 @@ import java.util.Map;
 /**
  *
  * @author Miguel González y Jaime Bárez
+ * Clase encargada del diccionario
  */
 public class Diccionario extends XML
 {
