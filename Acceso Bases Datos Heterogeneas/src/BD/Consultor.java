@@ -1,7 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package BD;
 
 import XML.Configuracion;
@@ -14,7 +10,7 @@ import java.util.logging.Logger;
 
 /**
  *
- * @author JaimeInves
+ * @author Miguel González y Jaime Bárez
  */
 public class Consultor {
     public ArrayList<String> lanzarConsulta(HashMap<String, String> sentenciasSQL) {
@@ -23,9 +19,11 @@ public class Consultor {
         BD baseDatos = new BD();
         for(int i=0; i<config.numBaseDatos(); i++) {
             String nombreBD = config.getNombreBaseDatos(i);
-            baseDatos.abrirBD(config.getValor(nombreBD, "conexion"), config.getValor(nombreBD, "usuario"), config.getValor(nombreBD, "password"));
-            ResultSet rsConsulta = baseDatos.consultar(sentenciasSQL.get(nombreBD));
+            
             try {
+                baseDatos.abrirBD(config.getValor(nombreBD, "conexion"), config.getValor(nombreBD, "usuario"), config.getValor(nombreBD, "password"));
+                ResultSet rsConsulta = baseDatos.consultar(sentenciasSQL.get(nombreBD));
+            
                 int numColumnas = rsConsulta.getMetaData().getColumnCount();
                 while (rsConsulta.next()) {
                     String tupla = "";
@@ -34,14 +32,18 @@ public class Consultor {
                         tupla += valor + " ";
                     }
                     tuplas.add(tupla);
+                
+                baseDatos.cerrar();
                 }
             } catch (SQLException ex) {
                 Logger.getLogger(Consultor.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (NullPointerException nl) {
+                System.out.println("Base de datos " + nombreBD + " inaccesible");
             }
                     //
                     //Obtener blablabla
                     //
-            baseDatos.cerrar();
+            
         }
         
         //sentenciasSQL.get(this)

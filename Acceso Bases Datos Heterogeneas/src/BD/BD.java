@@ -1,7 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package BD;
 
 import java.sql.*;
@@ -10,7 +6,7 @@ import java.util.logging.Logger;
 
 /**
  * Clase que maneja las operaciones de bases de datos
- * @author JaimeInves
+ * @author Miguel González y Jaime Bárez
  */
 public class BD {
     private Connection conexion;
@@ -23,7 +19,7 @@ public class BD {
             // Se registra el Driver de MySQL
             DriverManager.registerDriver(new org.gjt.mm.mysql.Driver());
         } catch (SQLException ex) {
-            Logger.getLogger(BD.class.getName()).log(Level.SEVERE, null, ex);
+            //Logger.getLogger(BD.class.getName()).log(Level.SEVERE, null, ex);
         }
 
     }
@@ -37,7 +33,7 @@ public class BD {
             // Se crea un Statement, para realizar la consulta
             myStatement = conexion.createStatement();
         } catch (SQLException ex) {
-            Logger.getLogger(BD.class.getName()).log(Level.SEVERE, null, ex);
+            //Logger.getLogger(BD.class.getName()).log(Level.SEVERE, null, ex);
         }
 
     }
@@ -49,7 +45,7 @@ public class BD {
             // ResultSet rs
             rs = myStatement.executeQuery (consulta);
         } catch (SQLException ex) {
-            Logger.getLogger(BD.class.getName()).log(Level.SEVERE, null, ex);
+            //Logger.getLogger(BD.class.getName()).log(Level.SEVERE, null, ex);
         }
         return rs;
     }
@@ -58,7 +54,7 @@ public class BD {
         try {
             conexion.close();
         } catch (SQLException ex) {
-            Logger.getLogger(BD.class.getName()).log(Level.SEVERE, null, ex);
+            //Logger.getLogger(BD.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 }
