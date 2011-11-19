@@ -5,6 +5,8 @@
 package BD;
 
 import GUI.ModeloTabla;
+import Utilidades.Analizador;
+import Utilidades.Tupla;
 import XML.Configuracion;
 import XML.Diccionario;
 import java.sql.ResultSet;
@@ -19,15 +21,24 @@ import java.util.logging.Logger;
  * @author Miguel González y Jaime Bárez
  */
 public class Consultor {
+    private Diccionario diccionario;
+    private Analizador analizador;
+    private BD baseDatos;
+    Configuracion config;
+
+    public Consultor() {
+        diccionario = new Diccionario();
+        analizador = new Analizador();
+        baseDatos = new BD();
+        config = new Configuracion();
+    }
+
     public ModeloTabla lanzarConsulta(HashMap<String, String> sentenciasSQL) {
         String headTable[] = null;
         String datos[][] = null;
         int numColumnas = 0;
         ArrayList<String[]> arrayDatos = new ArrayList<String[]>();
-
-        Configuracion config = new Configuracion();
-        BD baseDatos = new BD();
-        Diccionario diccionario = new Diccionario();
+        
         for(int i=0; i<config.numBaseDatos(); i++) {
             String nombreBD = config.getNombreBaseDatos(i);
             baseDatos.abrirBD(config.getValor(nombreBD, "conexion"), config.getValor(nombreBD, "usuario"), config.getValor(nombreBD, "password"));
@@ -37,18 +48,15 @@ public class Consultor {
 
                 //En la primera base de datos obtenemos los datos de la cabecera de la tabla
                 if(i == 0) {
-                    
                     headTable = new String[numColumnas];
-                    for(int j=1; j<= numColumnas;j++) {
-                        headTable[j - 1] = diccionario.getTraduccionPalabraAutomaticaInversa(nombreBD, rsConsulta.getMetaData().getColumnName(j));
-                    }
-                } else {
-                    for(int j=1; j<= numColumnas; j++) {
-                        if(headTable[j - 1].equals("NULL"))
-                            headTable[j - 1] = diccionario.getTraduccionPalabraAutomaticaInversa(nombreBD, rsConsulta.getMetaData().getColumnName(j));
-                    }
+                    for(int j=0; j<numColumnas; j++) {
+                        headTable[j] = new String();
+                    }    
                 }
 
+                //Traducimos la headTable
+                headTable = completarTraduccionInversaNombresColumnas(headTable, rsConsulta);
+                
                 int consultaActual = 0;
                 while (rsConsulta.next()) {
                     String []filaDatos = new String[numColumnas];
@@ -72,5 +80,33 @@ public class Consultor {
 
         //sentenciasSQL.get(this)
         return new ModeloTabla(datos,headTable);
+    }
+
+    public String[] completarTraduccionInversaNombresColumnas(String []headTable,  ResultSet rsConsulta) {
+
+        int numColumnas= headTable.length;
+        try {
+            for(int i=1; i<= numColumnas;i++) {
+                String nombreColumna = rsConsulta.getMetaData().getColumnName(i);
+
+                if(!nombreColumna.contains("NULL") || headTable[i -1].contains(nombreColumna)) {
+                    ArrayList<Tupla> columnaTroceada = analizador.desmembrar(nombreColumna);
+                    String nuevoColumnaTraducidaInversa = "";
+                    for (int j = 0; j < columnaTroceada.size(); j++) {
+                        if (columnaTroceada.get(j).isEsSeparador()) {
+                            nuevoColumnaTraducidaInversa += columnaTroceada.get(j).getPalabra();
+                        } else {
+                            nuevoColumnaTraducidaInversa += diccionario.getTraduccionPalabraAutomaticaInversa(columnaTroceada.get(j).getPalabra());
+                        }
+
+                        headTable[i - 1] = nuevoColumnaTraducidaInversa;
+                    }
+                }
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(Consultor.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        return headTable;
     }
 }

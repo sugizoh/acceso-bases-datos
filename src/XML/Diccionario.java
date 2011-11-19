@@ -89,43 +89,53 @@ public class Diccionario extends XML
         }
     }
 
-    public String getTraduccionPalabraAutomaticaInversa(String idioma, String palabra) {
-        //Obtenemos el HashMap de las tablas del idioma
-        HashMap<String,Object> traduccionesBD = (HashMap<String,Object>) xmlLeido.get(idioma.toUpperCase());
-        //Si no existe la base de datos
-        if(traduccionesBD == null) {
-            return palabra; //Devolvemos la palabra tal cual la escribió el usuario
-        } else {
-            //Obtenemos las tablas de la primera base de datos (nos da igual cual pues vamos a ir a las columnas que son iguales en todas)
-            ArrayList<String> tablas = getTablasDiccionario();
-            //Recorremos las tablas buscando la traducción
-            boolean encontrada = false;
-            String traduccionObtenida = null;
-            //Buscamos hasta encontrarla en la primera traducción que haya (Si hay más traducciones se supone que si el esquema es igual
-            //La traducción es igual, el gestor se encargará de decir si se hace a un FROM de varias tablas de decir
-            //Si es ambigua la columna
-            for(int i=0; i<tablas.size() && !encontrada; i++) {
-                //Obtenemos las traducciones para la tabla indicada
-                HashMap<String, String> traduccionesTabla = (HashMap<String,String>) traduccionesBD.get(tablas.get(i).toUpperCase());
-                //Si existe la tabla
-                if(traduccionesTabla != null) {
-                    //Iteramos las traducciones hasta encontar el mismo valor, entonces devolvemos la clave
-                    Iterator it = traduccionesTabla.entrySet().iterator();
-                    while (it.hasNext() && !encontrada) {
-                        Map.Entry e = (Map.Entry)it.next();
-                        if(palabra.toUpperCase().equals((e.getValue().toString().toUpperCase()))) {
-                            traduccionObtenida = e.getKey().toString();
-                            encontrada = true;
+    public String getTraduccionPalabraAutomaticaInversa(String palabra) {
+        ArrayList<String> nombresBD = getNombresDiccionarios();
+
+        String traduccionObtenida = null;
+        boolean encontrada = false;
+
+        for(int z=0; z<nombresBD.size() && !encontrada; z++)
+        {
+            String nombreBD = nombresBD.get(z);
+
+            //Obtenemos el HashMap de las tablas del idioma
+            HashMap<String,Object> traduccionesBD = (HashMap<String,Object>) xmlLeido.get(nombreBD.toUpperCase());
+
+            if(traduccionesBD != null) {
+                //Obtenemos las tablas de la primera base de datos (nos da igual cual pues vamos a ir a las columnas que son iguales en todas)
+                ArrayList<String> tablas = getTablasDiccionario();
+                //Recorremos las tablas buscando la traducción
+                encontrada = false;
+                traduccionObtenida = null;
+                //Buscamos hasta encontrarla en la primera traducción que haya (Si hay más traducciones se supone que si el esquema es igual
+                //La traducción es igual, el gestor se encargará de decir si se hace a un FROM de varias tablas de decir
+                //Si es ambigua la columna
+                for(int i=0; i<tablas.size() && !encontrada; i++) {
+                    //Obtenemos las traducciones para la tabla indicada
+                    HashMap<String, String> traduccionesTabla = (HashMap<String,String>) traduccionesBD.get(tablas.get(i).toUpperCase());
+                    //Si existe la tabla
+                    if(traduccionesTabla != null) {
+                        //Iteramos las traducciones hasta encontar el mismo valor, entonces devolvemos la clave
+                        Iterator it = traduccionesTabla.entrySet().iterator();
+                        while (it.hasNext() && !encontrada) {
+                            Map.Entry e = (Map.Entry)it.next();
+                            if(palabra.toUpperCase().equals((e.getValue().toString().toUpperCase()))) {
+                                traduccionObtenida = e.getKey().toString();
+                                encontrada = true;
+                            }
                         }
                     }
                 }
+
             }
-            //Si no se ha encontrado la palabra
-            if(!encontrada) {
-                return palabra; //Devolvemos la palabra tal cual la escribió el usuario
-            } else {
-                return traduccionObtenida;
-            }
+        }
+
+        //Si no se ha encontrado la palabra
+        if(!encontrada) {
+            return palabra; //Devolvemos la palabra tal cual la escribió el usuario
+        } else {
+            return traduccionObtenida;
         }
     }
 
