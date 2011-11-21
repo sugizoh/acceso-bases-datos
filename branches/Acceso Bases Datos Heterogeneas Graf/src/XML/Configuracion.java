@@ -12,17 +12,25 @@ import java.util.Iterator;
 import java.util.Map;
 
 /**
- *
  * @author Miguel González y Jaime Bárez
+ * Clase Configuracion
  */
 public class Configuracion extends XML
 {
+    /**
+     * Constructor de la clase Configuracion
+     */
     public Configuracion()
     {
         super("configuracion.xml", "basedatos");
     }
 
-    //Corregido
+    /**
+     * Función que devuelve el valor de una configuración de una base de datos
+     * @param baseDatos Base de datos de la que se obtiene la configuración
+     * @param valor Valor a obtener
+     * @return Devuelve el valor
+     */
     public String getValor(String baseDatos, String valor) {
         //Devolvemos la configuración para esa base de datos
         HashMap<String,String> configuracion = (HashMap<String,String>) xmlLeido.get(baseDatos);
@@ -34,7 +42,10 @@ public class Configuracion extends XML
         }
     }
 
-    //Corregido
+    /**
+     * Devuelve un ArrayList con los nombres de as bases de datos
+     * @return Devuelve los nombres de las bases de datos
+     */
     public ArrayList<String> getBaseDatos() {
         ArrayList<String> basesDatos = new ArrayList<String>();
 
@@ -48,12 +59,19 @@ public class Configuracion extends XML
         return basesDatos;
     }
 
-    //Corregido
+    /**
+     * Función que devuelve el número de base de datos
+     * @return Devuelve el número de base de datos
+     */
     public int numBaseDatos() {
         return xmlLeido.size();
     }
 
-    //Corregido
+    /**
+     * Función que devuelve el nombre de una base de datos en una posición
+     * @param posicion Posición
+     * @return Devuelve el nombre de una base de datos
+     */
     public String getNombreBaseDatos(int posicion) {
         //Iteramos para obtener la clave en la posición iterada
         int posActual = 0;

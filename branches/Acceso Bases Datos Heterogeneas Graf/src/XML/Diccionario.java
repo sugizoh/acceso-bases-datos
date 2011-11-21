@@ -14,19 +14,29 @@ import java.util.Map;
 /**
  *
  * @author Miguel González y Jaime Bárez
+ * Clase Diccionario
  */
 public class Diccionario extends XML
 {
-
+    /**
+     * Constructor de la clase Diccionario
+     */
     public Diccionario()
     {
         super("traducciones.xml", "basedatos", "tabla");
     }
 
-    //Corregida
-    public String getTraduccionPalabra(String idioma, String tabla, String palabra) {
+    /**
+     * Devuelve la traducción de una palabra para una base de datos y una tabla
+     *
+     * @param baseDatos Base de Datos a la que se traducirá la palabra
+     * @param tabla Tabla a la que se va a traducir la palabra
+     * @param palabra Palabra a traducir
+     * @return Devuelve la palabra traducida para una base de datos y una tabla
+     */
+    public String getTraduccionPalabra(String baseDatos, String tabla, String palabra) {
         //Obtenemos el HashMap de las tablas del idioma
-        HashMap<String,Object> traduccionesTablas = (HashMap<String,Object>) xmlLeido.get(idioma.toUpperCase());
+        HashMap<String,Object> traduccionesTablas = (HashMap<String,Object>) xmlLeido.get(baseDatos.toUpperCase());
         //Si no existe la base de datos
         if(traduccionesTablas == null) {
             return palabra; //Devolvemos la palabra tal cual la escribió el usuario
@@ -49,12 +59,16 @@ public class Diccionario extends XML
         }
     }
 
-    //Automáticamente intenta traducir la palabra
-    //Busca la palabra en las distintas tablas de un idioma
-    //O bien la palabra indica la base de datos, ej. LIBRO.IDAUTOR
-    public String getTraduccionPalabraAutomatica(String idioma, String palabra) {
+    /**
+     * Obtenemos la palabra traducida para una base de datos
+     *
+     * @param diccionario Base de datos en la cual se va a buscar
+     * @param palabra Palabra a traducir
+     * @return Devuelve la palabra traducida
+     */
+    public String getTraduccionPalabraAutomatica(String diccionario, String palabra) {
         //Obtenemos el HashMap de las tablas del idioma
-        HashMap<String,Object> traduccionesBD = (HashMap<String,Object>) xmlLeido.get(idioma.toUpperCase());
+        HashMap<String,Object> traduccionesBD = (HashMap<String,Object>) xmlLeido.get(diccionario.toUpperCase());
         //Si no existe la base de datos
         if(traduccionesBD == null) {
             return palabra; //Devolvemos la palabra tal cual la escribió el usuario
@@ -89,6 +103,12 @@ public class Diccionario extends XML
         }
     }
 
+    /**
+     * Función que devuelve la traducción al esquema genérico de una palabra
+     * 
+     * @param palabra Palabra traducida de la cual se quiere conocer como se llama en el esquema genérico
+     * @return Devueve la palabra en el esquema genérico
+     */
     public String getTraduccionPalabraAutomaticaInversa(String palabra) {
         ArrayList<String> nombresBD = getNombresDiccionarios();
 
@@ -139,7 +159,11 @@ public class Diccionario extends XML
         }
     }
 
-    //Corregido
+    /**
+     * Función que develve el nombre de los diccionarios
+     *
+     * @return Devuelve el nombre de los diccionaros
+     */
     public ArrayList<String> getNombresDiccionarios() {
         ArrayList<String> diccionarios = new ArrayList<String>();
 
@@ -153,7 +177,11 @@ public class Diccionario extends XML
         return diccionarios;
     }
 
-    //Corregido
+    /**
+     * Función que devuelve el nombre de las tablas del diccionario
+     *
+     * @return Devuelve el nombre de las tablas del diccionario
+     */
     public ArrayList<String> getTablasDiccionario() {
         //Cogemos el primer diccionario ya que todos van a tener las mismas claves
         HashMap<String, Object> diccionario = (HashMap<String, Object>)xmlLeido.get(getNombreDiccionario(0));
@@ -169,7 +197,11 @@ public class Diccionario extends XML
         return tablas;
     }
 
-    //Corregido
+    /**
+     * Función que devuelve las columnas de una base de datos
+     *
+     * @return HashMap con el nombre de las columnas se la base de datos por tablas
+     */
     public HashMap<String, ArrayList<String>> getColumnasBaseDatos() {
         //HashMap que contendrá las tablas para cada base de datos
         HashMap<String, ArrayList<String>> columnas = new HashMap<String, ArrayList<String>>();
@@ -210,17 +242,31 @@ public class Diccionario extends XML
         return columnas;
     }
 
-    //Corregido
+    /**
+     * Función que devuelve el número de diccionarios
+     *
+     * @return Devuelve el número de diccionarios
+     */
     public int numDiccionarios() {
         return xmlLeido.size();
     }
 
-    //Corregido
+    /**
+     * Función que devuelve el número de tablas de un diccionario
+     *
+     * @param Diccionario del cual se devolverá el número de tablas
+     * @return Devuelve el número de tablas
+     */
     public int numTablasDiccionario(HashMap<String, Object> tablasDiccionario) {
         return tablasDiccionario.size();
     }
 
-    //Corregido
+    /**
+     * Función que devuelve el nombre de un diccionario en una posición indicada
+     *
+     * @param posicion Posición del diccionario
+     * @return Devuelve el nombre del diccionario
+     */
     public String getNombreDiccionario(int posicion) {
         //Iteramos para obtener la clave en la posición iterada
         int posActual = 0;
@@ -235,7 +281,13 @@ public class Diccionario extends XML
         return hashCode.toUpperCase();
     }
 
-    //Corregido
+    /**
+     * Función que devuelve el nombre de una tabla indicada en una posición de un diccionario.
+     *
+     * @param tablasDiccionario Diccionario en cuya posición se quiere obtener el nombre de la tabla
+     * @param posicion Posición de la tabla en el diccionario
+     * @return Devuelve el nombre de una tabla
+     */
     public String getNombreTablaDiccionario(HashMap<String, Object> tablasDiccionario, int posicion) {
         //Iteramos para obtener la clave en la posición iterada
         int posActual = 0;
@@ -250,7 +302,12 @@ public class Diccionario extends XML
         return hashCode.toUpperCase();
     }
 
-    //Corregido
+    /**
+     * Función que analiza si una clave es una clave ambigua o no (es decir, está en varias tablas o no)
+     *
+     * @param clave Clave de una columna
+     * @return Devuelve verdad si la clave es ambigua, sino false
+     */
     public boolean claveAmbigua(String clave) {
         //Obtenemos el HashMap de las tablas de la primera base de datos (el esquema es igual para todas las bases de datos)
         HashMap<String,Object> traduccionesBD = (HashMap<String,Object>) xmlLeido.get(getNombreDiccionario(0));
