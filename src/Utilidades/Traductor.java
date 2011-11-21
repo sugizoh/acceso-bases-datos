@@ -12,7 +12,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
- *
+ * Clase Traductor
  * @author Miguel González y Jaime Bárez
  */
 public class Traductor
@@ -20,13 +20,20 @@ public class Traductor
     Diccionario diccionario;
     Analizador analizador;
 
-
+    /**
+     * Constructor del objeto Traductor
+     */
     public Traductor()
     {
         diccionario = new Diccionario();
         analizador = new Analizador();
     }
 
+    /**
+     * Función que dada una consulta SQL Devuelve las columnas con el formato "columna, columna, coumna "
+     * @param consultaSQL Consulta SQL
+     * @return Devuelve el nombre de las columnas según una consultaSQL dada.
+     */
     private String obtenerColumnasRemplazarAsterisco(String consultaSQL) {
         //Obtenemos las tablas del esquema para el primer diccionario (las columnas se van a llamar igual en el resto dediccionarios, mismo esquea)
         ArrayList<String> nombresTablas = diccionario.getTablasDiccionario();
@@ -55,6 +62,11 @@ public class Traductor
         return asteriscoSustituir;
     }
 
+    /**
+     * Dada una consulta SQL la devuelve sin el asterisco
+     * @param consultaSQL Consulta SQL a analizar
+     * @return Dada una consulta SQL la devuelve sin el asterisco
+     */
     private String obtenerConsultaSinASterisco(String consultaSQL)
     {
         //Preanalizamos el sql para sustituir el * por los nombres de las columnas
@@ -129,6 +141,12 @@ public class Traductor
         return consultaSQL;
     }
 
+    /**
+     * Dada una consulta SQL devuelve un HashMap un SQL con la cadena traducida para cada tipo de base de datos
+     * @param consultaSQL Consulta SQL A traducir
+     * @return Devuelve las consultas ya traducidas
+     * @throws Exception Excepción de error
+     */
     public HashMap<String, String> getConsultasTraducidas(String consultaSQL) throws Exception {
 
         //Obtenemos la consulta sin asteriscos en el caso de que lo hubiera. Ej. SELECT * FROM Tabla, ....

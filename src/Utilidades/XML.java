@@ -19,13 +19,19 @@ import org.w3c.dom.Element;
 import org.xml.sax.SAXException;
 
 /**
- *
  * @author Miguel Gonzalez y Jaime Bárez
+ * Clase XML
  */
 public class XML
 {
     protected HashMap<String, Object> xmlLeido;
 
+    /**
+     * Constructor de la clase XML sobrecargada
+     * @param ficheroXML Nombre del fichero XML
+     * @param subArboles SubÁrboles que contendrá el fichero XML
+     * @throws RuntimeException Excepción
+     */
     public XML(String ficheroXML, String... subArboles) throws RuntimeException {
         if(subArboles.length == 0) { //Comprobamos que se pasan subArboles a leer (no tiene sentido sino se hace)
             throw new RuntimeException("No se le pasan subArboles al leer el XML");
@@ -52,6 +58,12 @@ public class XML
         }
     }
 
+    /**
+     * Carga recursiva del dom
+     * @param docEle Nodo en el que estamos
+     * @param subArboles SubÁrboles que quedan por leer
+     * @return Devuelve un HashMap con la nueva generación de ese nodo
+     */
     private HashMap<String, Object> cargaDomRecursivo(Element docEle, String... subArboles) {
         //Creamos el HashMap
         HashMap<String, Object> conf = new HashMap<String, Object>();
@@ -86,6 +98,12 @@ public class XML
         }
     }
 
+    /**
+     * Función que obtiene los valores en un nodo final (hijo)
+     * @param padre Nodo padre
+     * @param hijos Lista con los nodos hijo
+     * @return Devuelve un HashMap con los hijos y sus valores
+     */
     private HashMap<String, Object> obtenerValores(Element padre, NodeList hijos)
     {
         HashMap<String, Object> valores = new HashMap<String,Object>();
@@ -108,6 +126,12 @@ public class XML
         return valores;
     }
 
+    /**
+     * Obtiene el texto de un nodo
+     * @param elemento Nodos hijos
+     * @param nombreEtiqueta Etiqueta
+     * @return Devuelve el valor del nodo cuya etiqueta corresponde
+     */
     private String obtenerTexto(Element elemento, String nombreEtiqueta) {
         String texto = null;
 
