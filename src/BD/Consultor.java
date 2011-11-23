@@ -55,7 +55,7 @@ public class Consultor {
                 }
 
                 //Traducimos la headTable
-                headTable = completarTraduccionInversaNombresColumnas(headTable, rsConsulta);
+                completarTraduccionInversaNombresColumnas(headTable, rsConsulta);
                 
                 int consultaActual = 0;
                 while (rsConsulta.next()) {
@@ -82,7 +82,7 @@ public class Consultor {
         return new ModeloTabla(datos,headTable);
     }
 
-    public String[] completarTraduccionInversaNombresColumnas(String []headTable,  ResultSet rsConsulta) {
+    public void completarTraduccionInversaNombresColumnas(String []headTable,  ResultSet rsConsulta) {
 
         int numColumnas= headTable.length;
         try {
@@ -106,7 +106,5 @@ public class Consultor {
         } catch (SQLException ex) {
             Logger.getLogger(Consultor.class.getName()).log(Level.SEVERE, null, ex);
         }
-
-        return headTable;
     }
 }

@@ -53,7 +53,7 @@ public class Main extends JFrame {
         lblConsulta.setVisible(true);
         this.add(lblConsulta);
 
-        txtConsulta = new JTextArea("SELECT substr(titulo,1,10), editorial, precio, nombreAutor FROM"
+        txtConsulta = new JTextArea("SELECT substr(titulo,1,10), fechaEdicion, precio, nombreAutor FROM"
                 + " Libro, Autor WHERE Libro.idAutor = Autor.idAutor");
         txtConsulta.setBounds(5, 160, 980, 60);
         txtConsulta.setAlignmentX(TOP_ALIGNMENT);
