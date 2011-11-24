@@ -73,14 +73,30 @@ public class Traductor
         String regexAsterisco = "select[ ]*\\*[ ]*from|select[ ]*\\*[ ]*,"; //Ej. select * from tabla .... Ò select *, .... , ...
 
         Pattern patronAsterisco = Pattern.compile(regexAsterisco, Pattern.CASE_INSENSITIVE); //Compilamos el patrón
-        Matcher matcherAsterisco = patronAsterisco.matcher(consultaSQL);
 
-        if(matcherAsterisco.find()) //Si hay una coincidencia
-        {
-            //Sustituimos el primer asterisco por las columnas
-            consultaSQL = consultaSQL.replaceFirst(("\\*"), obtenerColumnasRemplazarAsterisco(consultaSQL));
-        }
+        String consultaOriginal = consultaSQL;
+        Boolean encontradaCoincidencia;
 
+        do {
+            encontradaCoincidencia = false;
+            Matcher matcherAsterisco = patronAsterisco.matcher(consultaSQL);
+
+            if(matcherAsterisco.find()) //Si hay una coincidencia
+            {
+                //Dividimos la consultaSQL
+                String consultaSQLInicio = consultaSQL.substring(0, matcherAsterisco.start());
+                String consultaSQLAsterisco = consultaSQL.substring(matcherAsterisco.start(), matcherAsterisco.end());
+                String consultaSQLFin = consultaSQL.substring(matcherAsterisco.end(), consultaSQL.length());
+
+                //Ponemos espacios al principio y al final. Por si es SELECT*FROM -> no ponga SELECTcampo1FROM que da error, sea SELECT campo1 FROM
+                consultaSQLAsterisco = consultaSQLAsterisco.replaceFirst(("\\*"), " " + obtenerColumnasRemplazarAsterisco(consultaOriginal) + " ");
+
+                //Rearmamos la consultaSQL
+                consultaSQL = consultaSQLInicio + consultaSQLAsterisco + consultaSQLFin;
+
+                encontradaCoincidencia = true;
+            }
+        } while(encontradaCoincidencia);
         return consultaSQL;
     }
 
