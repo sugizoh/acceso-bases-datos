@@ -86,8 +86,17 @@ public class Diccionario extends XML
                 HashMap<String, String> traduccionesTabla = (HashMap<String,String>) traduccionesBD.get(tablas.get(i).toUpperCase());
                 //Si existe la tabla
                 if(traduccionesTabla != null) {
-                    //Obtenemos la traducción de la palabra en esa tabla
-                    traduccionObtenida = (String)traduccionesTabla.get(palabra.toUpperCase()); //Si no se encuentra la palabra en la tabla del diccionario
+                    //Comprobamos si es `palabra`
+                    if(palabra.startsWith("`") && palabra.endsWith("`"))
+                    {
+                        palabra = palabra.substring(1, palabra.length() - 1);
+                        //Obtenemos la traducción de la palabra en esa tabla
+                        traduccionObtenida = (String)traduccionesTabla.get(palabra.toUpperCase()); //Si no se encuentra la palabra en la tabla del diccionario
+                        palabra = "`" + palabra + "`";
+                    } else {
+                        //Obtenemos la traducción de la palabra en esa tabla
+                        traduccionObtenida = (String)traduccionesTabla.get(palabra.toUpperCase()); //Si no se encuentra la palabra en la tabla del diccionario
+                    }
                     //Si no existe la palabra
                     if(traduccionObtenida != null) {
                         encontrada = true;

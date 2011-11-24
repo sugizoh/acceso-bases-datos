@@ -70,7 +70,7 @@ public class Traductor
     private String obtenerConsultaSinASterisco(String consultaSQL)
     {
         //Preanalizamos el sql para sustituir el * por los nombres de las columnas
-        String regexAsterisco = "select[ ]+\\*[ ]+from |select[ ]+\\*[ ]*,"; //Ej. select * from tabla .... Ò select *, .... , ...
+        String regexAsterisco = "select[ ]*\\*[ ]*from|select[ ]*\\*[ ]*,"; //Ej. select * from tabla .... Ò select *, .... , ...
 
         Pattern patronAsterisco = Pattern.compile(regexAsterisco, Pattern.CASE_INSENSITIVE); //Compilamos el patrón
         Matcher matcherAsterisco = patronAsterisco.matcher(consultaSQL);
