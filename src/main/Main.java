@@ -2,13 +2,10 @@ package main;
 import Utilidades.Traductor;
 import BD.Consultor;
 import GUI.ModeloTabla;
-import Utilidades.LecturaTeclado;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.HashMap;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -26,7 +23,6 @@ import javax.swing.table.JTableHeader;
  */
 public class Main extends JFrame {
     //
-    LecturaTeclado lectura;
     Traductor traductor;
     JTextArea txtConsulta;
     JButton btnEjecutarConsulta;

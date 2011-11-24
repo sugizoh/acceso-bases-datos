@@ -4,7 +4,12 @@
  */
 package BD;
 
-import java.sql.*;
+import java.sql.Statement;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+
 
 /**
  * Clase que maneja las operaciones de bases de datos
