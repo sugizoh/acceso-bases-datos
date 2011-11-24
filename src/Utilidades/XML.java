@@ -32,30 +32,23 @@ public class XML
      * @param subArboles SubÁrboles que contendrá el fichero XML
      * @throws RuntimeException Excepción
      */
-    public XML(String ficheroXML, String... subArboles) throws RuntimeException {
+    public XML(String ficheroXML, String... subArboles) throws RuntimeException, SAXException, IOException, ParserConfigurationException {
         if(subArboles.length == 0) { //Comprobamos que se pasan subArboles a leer (no tiene sentido sino se hace)
             throw new RuntimeException("No se le pasan subArboles al leer el XML");
         }
         //Creamos el HashMap xmlLeido
         xmlLeido = new HashMap<String, Object>();
-        try {
-            //Obteher el objeto DocumentBuilderFactory
-            DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
-            //Usar DocumentBuilderFactory para crear un DocumentBuilder
-            DocumentBuilder db = dbf.newDocumentBuilder();
-            //Parsear a partir de un archivo
-            Document dom = db.parse(ficheroXML);
-            //Obtener el documento raiz
-            Element docEle = dom.getDocumentElement();
-            //Cargamos recursivamente el HashMap xmlLeido
-            xmlLeido = cargaDomRecursivo(docEle, subArboles);
-        } catch (SAXException ex) {
-            Logger.getLogger(XML.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (IOException ex) {
-            Logger.getLogger(XML.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (ParserConfigurationException ex) {
-            Logger.getLogger(XML.class.getName()).log(Level.SEVERE, null, ex);
-        }
+
+        //Obteher el objeto DocumentBuilderFactory
+        DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
+        //Usar DocumentBuilderFactory para crear un DocumentBuilder
+        DocumentBuilder db = dbf.newDocumentBuilder();
+        //Parsear a partir de un archivo
+        Document dom = db.parse(ficheroXML);
+        //Obtener el documento raiz
+        Element docEle = dom.getDocumentElement();
+        //Cargamos recursivamente el HashMap xmlLeido
+        xmlLeido = cargaDomRecursivo(docEle, subArboles);
     }
 
     /**

@@ -13,6 +13,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextArea;
@@ -120,7 +121,16 @@ class eventosBotones implements ActionListener
             ModeloTabla tableModel = consultor.lanzarConsulta(traducciones);
             main.tablaResultados.setModel(tableModel);
         } catch (Exception ex) {
-            Logger.getLogger(eventosBotones.class.getName()).log(Level.SEVERE, null, ex);
+            String mensajeError = ex.getMessage();
+
+            int longitudMensajeError = mensajeError.length();
+
+            for(int i=0; i<longitudMensajeError/80; i++) {
+                mensajeError = mensajeError.substring(0, 80 * (i + 1)) + "\n" + mensajeError.substring(80 * (i + 1), mensajeError.length());
+            }
+
+            JOptionPane.showMessageDialog(main, mensajeError, "Error",
+                                JOptionPane.WARNING_MESSAGE);
         }
     }
 

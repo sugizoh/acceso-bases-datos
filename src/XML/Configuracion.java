@@ -6,10 +6,13 @@
 package XML;
 
 import Utilidades.XML;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
+import javax.xml.parsers.ParserConfigurationException;
+import org.xml.sax.SAXException;
 
 /**
  * @author Miguel González y Jaime Bárez
@@ -20,7 +23,7 @@ public class Configuracion extends XML
     /**
      * Constructor de la clase Configuracion
      */
-    public Configuracion()
+    public Configuracion() throws RuntimeException, SAXException, IOException, ParserConfigurationException
     {
         super("configuracion.xml", "basedatos");
     }

@@ -6,10 +6,13 @@
 package XML;
 
 import Utilidades.XML;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
+import javax.xml.parsers.ParserConfigurationException;
+import org.xml.sax.SAXException;
 
 /**
  *
@@ -21,7 +24,7 @@ public class Diccionario extends XML
     /**
      * Constructor de la clase Diccionario
      */
-    public Diccionario()
+    public Diccionario() throws RuntimeException, SAXException, IOException, ParserConfigurationException
     {
         super("traducciones.xml", "basedatos", "tabla");
     }

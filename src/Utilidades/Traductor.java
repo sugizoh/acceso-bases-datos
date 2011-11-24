@@ -6,10 +6,13 @@
 package Utilidades;
 
 import XML.Diccionario;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import javax.xml.parsers.ParserConfigurationException;
+import org.xml.sax.SAXException;
 
 /**
  * Clase Traductor
@@ -23,7 +26,7 @@ public class Traductor
     /**
      * Constructor del objeto Traductor
      */
-    public Traductor()
+    public Traductor() throws RuntimeException, SAXException, IOException, ParserConfigurationException
     {
         diccionario = new Diccionario();
         analizador = new Analizador();
