@@ -7,7 +7,6 @@ package GUI;
 
 import java.awt.Point;
 import java.util.HashMap;
-import java.util.Hashtable;
 import javax.swing.table.AbstractTableModel;
 
 /**
@@ -17,11 +16,8 @@ import javax.swing.table.AbstractTableModel;
 public class ModeloTabla extends AbstractTableModel {
 
   private HashMap<Point,String> lookup;
-
   private final int rows;
-
   private final int columns;
-
   private final String headers[];
 
   public ModeloTabla(String datos[][], String columnHeaders[]) {
