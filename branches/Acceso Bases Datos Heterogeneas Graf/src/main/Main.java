@@ -5,7 +5,15 @@ import GUI.ModeloTabla;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
+import java.util.Locale;
+import java.util.logging.FileHandler;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import java.util.logging.SimpleFormatter;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -31,6 +39,24 @@ public class Main extends JFrame {
 
     public Main(String nombrePrograma) {
         super(nombrePrograma);
+
+        //Se crea un manejador de archivo para el Logger
+        FileHandler fh = null;
+        try {
+            Calendar calendario = Calendar.getInstance();
+            String rutaLog = "log/" + calendario.get(Calendar.YEAR) + "-" + calendario.get(Calendar.MONTH) + "-" + calendario.get(Calendar.DAY_OF_MONTH) + ".log";
+            fh = new FileHandler(rutaLog, 10485760, 1, true);
+
+            fh.setLevel(Level.ALL); // level
+            fh.setFormatter(new SimpleFormatter()); //formatter
+
+            // agregar el manejador de archivo al log
+            Logger.getLogger(Main.class.getName()).addHandler(fh);
+         } catch (IOException ex1) {
+            Logger.getLogger(eventosBotones.class.getName()).log(Level.SEVERE, null, ex1);
+         } catch (SecurityException ex1) {
+            Logger.getLogger(eventosBotones.class.getName()).log(Level.SEVERE, null, ex1);
+         }
 
         this.setLayout(null);
 
@@ -117,17 +143,17 @@ class eventosBotones implements ActionListener
             ModeloTabla tableModel = consultor.lanzarConsulta(traducciones);
             main.tablaResultados.setModel(tableModel);
         } catch (Exception ex) {
+            //Pasamos el error al Logger
+            Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
+
+            //Mostramos el mensaje de error por pantalla
             String mensajeError = ex.getMessage();
-
+            //Dividimos el mensaje de error
             int longitudMensajeError = mensajeError.length();
-
-            for(int i=0; i<longitudMensajeError/80; i++) {
+            for (int i = 0; i < longitudMensajeError / 80; i++) {
                 mensajeError = mensajeError.substring(0, 80 * (i + 1)) + "\n" + mensajeError.substring(80 * (i + 1), mensajeError.length());
             }
-
-            JOptionPane.showMessageDialog(main, mensajeError, "Error",
-                                JOptionPane.WARNING_MESSAGE);
+            JOptionPane.showMessageDialog(main, mensajeError, "Error", JOptionPane.WARNING_MESSAGE);
         }
     }
-
 }
