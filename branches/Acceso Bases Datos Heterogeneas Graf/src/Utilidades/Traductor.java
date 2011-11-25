@@ -1,8 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
-
 package Utilidades;
 
 import XML.Diccionario;
@@ -35,7 +30,7 @@ public class Traductor
     /**
      * Función que dada una consulta SQL Devuelve las columnas con el formato "columna, columna, columna "
      * @param consultaSQL Consulta SQL
-     * @return Devuelve el nombre de las columnas según una consultaSQL dada.
+     * @return Devuelve el nombre de las columnas según una consulta SQL dada.
      */
     private String obtenerColumnasRemplazarAsterisco(String consultaSQL) {
         //Obtenemos las tablas del esquema para el primer diccionario (las columnas se van a llamar igual en el resto dediccionarios, mismo esquea)

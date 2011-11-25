@@ -1,8 +1,8 @@
 package Utilidades;
 /**
- *
- * @author Jaime Bárez y Miguel González
- * Clase que consiste en un String y un Boolean(usaermos true si la palabra es separador)
+ *Clase que consiste en un String y un Boolean(usaremos true si la palabra es separador)
+ * @author Miguel González y Jaime Bárez
+ * 
  */
 public class Tupla {
     
