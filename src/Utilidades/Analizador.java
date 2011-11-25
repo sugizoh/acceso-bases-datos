@@ -4,14 +4,16 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
- *
- * @author Jaime Bárez y Miguel González
+ *Clase que se encarga de analizar cadenas
+ * @author Miguel González y Jaime Bárez
  */
 public class Analizador {
 
     private final String palabrasSeparadoras;
     private final String palabrasSeparadorasRegex;
-
+/**
+     * Constructor
+     */
     public Analizador()
     {
         palabrasSeparadoras = " ,.;=><()\\*+-\\/";

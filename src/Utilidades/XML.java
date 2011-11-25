@@ -1,8 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
-
 package Utilidades;
 
 import java.io.IOException;
@@ -17,8 +12,9 @@ import org.w3c.dom.Element;
 import org.xml.sax.SAXException;
 
 /**
- * @author Miguel Gonzalez y Jaime Bárez
  * Clase XML
+ * @author Miguel Gonzalez y Jaime Bárez
+ * 
  */
 public class XML
 {
