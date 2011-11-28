@@ -20,6 +20,10 @@ public class XML
 {
     protected HashMap<String, Object> xmlLeido;
 
+    public HashMap<String, Object> getXmlLeido() {
+        return xmlLeido;
+    }
+
     /**
      * Constructor de la clase XML sobrecargada
      * @param ficheroXML Nombre del fichero XML
