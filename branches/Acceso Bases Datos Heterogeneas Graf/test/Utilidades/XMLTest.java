@@ -52,9 +52,17 @@ public class XMLTest {
         HashMap<String, HashMap<String, String>> hashMapExp = new HashMap<String, HashMap<String, String>>();
 
         HashMap<String, Object> hashMapAmazon = new HashMap<String, Object>();
-        hashMapAmazon.put("conexion", "jdbc:mysql://localhost/Amazon");
-        hashMapAmazon.put("usuario", "root");
-        hashMapAmazon.put("password", "root");
+        hashMapAmazon.put("conexion".toUpperCase(), "jdbc:mysql://localhost/Amazon");
+        hashMapAmazon.put("usuario".toUpperCase(), "root");
+        hashMapAmazon.put("password".toUpperCase(), "root");
+
+        HashMap<String, Object> hashMapCasaDelLibro = new HashMap<String, Object>();
+        hashMapCasaDelLibro.put("conexion".toUpperCase(), "jdbc:mysql://localhost/CasaDelLibro");
+        hashMapCasaDelLibro.put("usuario".toUpperCase(), "root");
+        hashMapCasaDelLibro.put("password".toUpperCase(), "root");
+
+        hashMapExp.put("amazon".toUpperCase(),(HashMap<String, String>) (Object) hashMapAmazon);
+        hashMapExp.put("casadellibro".toUpperCase(), (HashMap<String, String>) (Object) hashMapCasaDelLibro);
 
         //Rellenar XML
 
