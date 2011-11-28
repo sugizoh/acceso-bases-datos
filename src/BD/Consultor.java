@@ -47,7 +47,7 @@ public class Consultor {
             
             numColumnas = rsConsulta.getMetaData().getColumnCount();
 
-            //En la primera base de datos obtenemos los datos de la cabecera de la tabla
+            //Inicializamos el headTable
             if(i == 0) {
                 headTable = new String[numColumnas];
                 for(int j=0; j<numColumnas; j++) {
@@ -88,7 +88,7 @@ public class Consultor {
         for(int i=1; i<= numColumnas;i++) {
             String nombreColumna = rsConsulta.getMetaData().getColumnName(i);
 
-            if(!nombreColumna.contains("NULL") || headTable[i -1].contains(nombreColumna)) {
+            if(headTable[i-1].contains("NULL") || headTable[i-1].isEmpty()) {
                 ArrayList<Tupla> columnaTroceada = analizador.desmembrar(nombreColumna);
                 String nuevoColumnaTraducidaInversa = "";
                 for (int j = 0; j < columnaTroceada.size(); j++) {
