@@ -70,8 +70,8 @@ public class ConsultorTest {
         String [] nombresBasesDatos= {"amazon", "casadellibro"};
         int numBaseDatos = 2;
         
-        sentenciasSQL.put("amazon", "SELECT substr(tituloLibro,1,10), fechaEdicion, precio, nombreAutor FROM Amazon, Autor WHERE Amazon.idAutor = Autor.idAutor");
-        sentenciasSQL.put("casadellibro", "SELECT substr(titulo,1,10), precio, nombreAutor FROM CasaDelLibro, Autor WHERE CasaDelLibro.idAutor = Autor.idAutor");
+        sentenciasSQL.put("amazon", "SELECT substr(tituloLibro,1,10), precio, nombreAutor FROM Amazon, Autor WHERE Amazon.idAutor = Autor.idAutor");
+        sentenciasSQL.put("casadellibro", "SELECT substr(titulo,1,10), fechaEdicion, precio, nombreAutor FROM CasaDelLibro, Autor WHERE CasaDelLibro.idAutor = Autor.idAutor");
 
         
         
@@ -125,6 +125,7 @@ public class ConsultorTest {
         
         ModeloTabla expResult = new ModeloTabla(datos,headTable);
         ModeloTabla result = instance.lanzarConsulta(sentenciasSQL);
+        System.out.println("Hemos llegado hasta casi el final");
         assertEquals(expResult, result);
         // TODO review the generated test code and remove the default call to fail.
         //fail("The test case is a prototype.");
