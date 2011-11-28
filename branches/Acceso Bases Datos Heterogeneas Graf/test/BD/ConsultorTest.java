@@ -31,7 +31,7 @@ public class ConsultorTest {
     public String cadenaConexionCasaDelLibro = "jdbc:mysql://localhost/CasaDelLibro";
     public String[] cadenaConexiones= {cadenaConexionAmazon, cadenaConexionCasaDelLibro};
     public String usuario = "root";
-    public String contraseña = "sql";
+    public String contraseña = "root";
     private Connection conexion;
     
     public ConsultorTest() throws SQLException {
@@ -78,7 +78,7 @@ public class ConsultorTest {
         int numColumnas = 0;
         ArrayList<String[]> arrayDatos = new ArrayList<String[]>();
         
-        for(int i=0; i<numBaseDatos; i++) {
+        for(int i=numBaseDatos - 1; i>= 0; i--) {
             String nombreBD = nombresBasesDatos[i];
             conexion = DriverManager.getConnection (cadenaConexiones[i],usuario, contraseña);
             myStatement = conexion.createStatement();
@@ -122,7 +122,7 @@ public class ConsultorTest {
             if (expResult.getRowCount() == result.getRowCount())
             {
                 
-                if(expResult.getValueAt(0, 0)!=result.getValueAt(0, 0))
+                if(!expResult.getValueAt(0, 0).equals(result.getValueAt(0, 0)))
                 {
                     fail("Contenido distinto");
                 }
