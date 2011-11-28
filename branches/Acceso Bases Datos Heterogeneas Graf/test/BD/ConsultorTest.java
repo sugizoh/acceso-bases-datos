@@ -31,7 +31,7 @@ public class ConsultorTest {
     public String cadenaConexionCasaDelLibro = "jdbc:mysql://localhost/CasaDelLibro";
     public String[] cadenaConexiones= {cadenaConexionAmazon, cadenaConexionCasaDelLibro};
     public String usuario = "root";
-    public String contraseña = "sql";
+    public String contraseña = "root";
     private Connection conexion;
     
     public ConsultorTest() throws SQLException {
@@ -67,16 +67,13 @@ public class ConsultorTest {
         HashMap<String, String> sentenciasSQL = new HashMap<String, String>();
         
         
-        String [] nombresBasesDatos= {"amazon", "casadellibro"};
-        int numBaseDatos = 2;
+        String [] nombresBasesDatos= {"amazon".toUpperCase(), "casadellibro".toUpperCase()};
+        int numBaseDatos = nombresBasesDatos.length;
         
-        sentenciasSQL.put("amazon", "SELECT substr(tituloLibro,1,10), precio, nombreAutor FROM Amazon, Autor WHERE Amazon.idAutor = Autor.idAutor");
-        sentenciasSQL.put("casadellibro", "SELECT substr(titulo,1,10), fechaEdicion, precio, nombreAutor FROM CasaDelLibro, Autor WHERE CasaDelLibro.idAutor = Autor.idAutor");
+        sentenciasSQL.put("amazon".toUpperCase(), "SELECT substr(tituloLibro,1,10), \"NULL\", precio, nombreAutor FROM Amazon, Autor WHERE Amazon.idAutor = Autor.idAutor");
+        sentenciasSQL.put("casadellibro".toUpperCase(), "SELECT substr(titulo,1,10), fechaEdicion, precio, nombreAutor FROM CasaDelLibro, Autor WHERE CasaDelLibro.idAutor = Autor.idAutor");
 
         
-        
-        
-        String headTable[] = null;
         String datos[][] = null;
         int numColumnas = 0;
         ArrayList<String[]> arrayDatos = new ArrayList<String[]>();
@@ -88,17 +85,6 @@ public class ConsultorTest {
             ResultSet rsConsulta = myStatement.executeQuery (sentenciasSQL.get(nombreBD));
             
             numColumnas = rsConsulta.getMetaData().getColumnCount();
-
-            //En la primera base de datos obtenemos los datos de la cabecera de la tabla
-            if(i == 0) {
-                headTable = new String[numColumnas];
-                for(int j=0; j<numColumnas; j++) {
-                    headTable[j] = new String();
-                }
-            }
-
-            //Traducimos la headTable
-            instance.completarTraduccionInversaNombresColumnas(headTable, rsConsulta);
 
             int consultaActual = 0;
             while (rsConsulta.next()) {
@@ -120,7 +106,11 @@ public class ConsultorTest {
             datos[i] = arrayDatos.get(i);
 
 
-        
+        String headTable[] = new String[4];
+        headTable[0] = "substr(TITULOLIBRO,1,10)";
+        headTable[1] = "FECHAEDICION";
+        headTable[2] = "PRECIO";
+        headTable[3]= "NOMBREAUTOR";
         
         
         ModeloTabla expResult = new ModeloTabla(datos,headTable);
