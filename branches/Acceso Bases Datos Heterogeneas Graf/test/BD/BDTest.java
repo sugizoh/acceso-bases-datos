@@ -5,6 +5,9 @@
 
 package BD;
 
+import java.util.HashMap;
+import Utilidades.Traductor;
+import XML.Configuracion;
 import java.sql.Statement;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -52,22 +55,22 @@ public class BDTest {
     public void testAbrirCerrarConexiones() throws Exception {
         //Creamos un objeto BD
         BD instance = new BD();
+        Configuracion configuracion = new Configuracion();
 
-        System.out.println("Abriendo conexión con Amazon");
-        String cadenaConexion = "jdbc:mysql://localhost/Amazon";
-        String usuario = "root";
-        String contraseña = "sql";
-        instance.abrirBD(cadenaConexion, usuario, contraseña);
+        int numBD = configuracion.numBaseDatos();
 
-        System.out.println("Cerrando conexión con amazon");
-        instance.cerrar();
+        for(int i=0; i<numBD; i++) {
+            String nombreBD = configuracion.getNombreBaseDatos(i);
 
-        System.out.println("Abriendo conexión con CasaDelLibro");
-        cadenaConexion = "jdbc:mysql://localhost/CasaDelLibro";
-        instance.abrirBD(cadenaConexion, usuario, contraseña);
+            System.out.println("Abriendo conexión con " + nombreBD);
+            String cadenaConexion = configuracion.getValor(nombreBD, "conexion");
+            String usuario = configuracion.getValor(nombreBD, "usuario");
+            String contraseña = configuracion.getValor(nombreBD, "password");
+            instance.abrirBD(cadenaConexion, usuario, contraseña);
 
-        System.out.println("Cerrando conexión con CasaDelLibro");
-        instance.cerrar();
+            System.out.println("Cerrando conexión con " + nombreBD);
+            instance.cerrar();
+        }
     }
 
     /**
@@ -75,27 +78,40 @@ public class BDTest {
      */
     @Test
     public void testConsultar() throws Exception {
+        //Creamos un objeto BD
         BD instance = new BD();
+        Configuracion configuracion = new Configuracion();
+        Traductor traductor = new Traductor();
 
-        System.out.println("Comprobando consulta a Amazon");
+        String consultaGenerica = "SELECT substr(titulo,1,10), fechaEdicion, precio, nombreAutor FROM"
+                + " Libro, Autor WHERE Libro.idAutor = Autor.idAutor";
 
+        HashMap<String, String> consultas = traductor.getConsultasTraducidas(consultaGenerica);
 
+        int numBD = configuracion.numBaseDatos();
 
-        //Abrimos la conexión con la base de datos
-        String cadenaConexion = "jdbc:mysql://localhost/Amazon";
-        String usuario = "root";
-        String contraseña = "sql";
-        instance.abrirBD(cadenaConexion, usuario, contraseña);
+        for(int i=0; i<numBD; i++) {
+            String nombreBD = configuracion.getNombreBaseDatos(i);
 
-        //Consulta SQL
-        String consulta = "SELECT tituloLibro, editorial, numPaginas, nombreAutor FROM Amazon, Autor WHERE Amazon.idAutor = Autor.idAutor;";
+            System.out.println("Comprobando consulta a " + nombreBD);
+            String cadenaConexion = configuracion.getValor(nombreBD, "conexion");
+            String usuario = configuracion.getValor(nombreBD, "usuario");
+            String contraseña = configuracion.getValor(nombreBD, "password");
+            instance.abrirBD(cadenaConexion, usuario, contraseña);
 
-        Connection conexion = DriverManager.getConnection (cadenaConexion,usuario, contraseña);
-        Statement myStatement = conexion.createStatement();
+            Connection conexion = DriverManager.getConnection (cadenaConexion,usuario, contraseña);
+            Statement myStatement = conexion.createStatement();
 
-        ResultSet expResult = myStatement.executeQuery (consulta); //ResultSet experado
-        ResultSet result = instance.consultar(consulta); //ResultSet devuelto por BD
+            ResultSet result = instance.consultar(consultas.get(nombreBD));
+            ResultSet expResult = myStatement.executeQuery (consultas.get(nombreBD)); //ResultSet experado
 
+            coomprobarResultSet(result, expResult);
+
+            instance.cerrar();
+        }
+    }
+
+    private void coomprobarResultSet(ResultSet result, ResultSet expResult) throws SQLException {
         //Comparamos los resultados
         if(expResult.getMetaData().getColumnCount() == result.getMetaData().getColumnCount())
         {
@@ -118,51 +134,5 @@ public class BDTest {
         } else {
             fail("La consulta a Amazon devuelve distinto número de columnas");
         }
-
-        //Cerramos la conexión con la base de datos
-        instance.cerrar();
-        conexion.close();
-
-        System.out.println("Comprobando consulta a CasaDelLibro");
-        
-        //Abrimos la conexión con CasaDelLibro
-        cadenaConexion = "jdbc:mysql://localhost/CasaDelLibro";
-        instance.abrirBD(cadenaConexion, usuario, contraseña);
-
-        //Consulta SQL
-        consulta = "SELECT titulo, ISBN, fechaEdicion, nombreAutor FROM CasaDelLibro, Autor WHERE CasaDelLibro.idAutor = Autor.idAutor;";
-        
-        conexion = DriverManager.getConnection (cadenaConexion,usuario, contraseña);
-        myStatement = conexion.createStatement();
-
-        expResult = myStatement.executeQuery (consulta); //ResultSet experado
-        result = instance.consultar(consulta); //ResultSet devuelto por BD
-
-        //Comparamos los resultados
-        if(expResult.getMetaData().getColumnCount() == result.getMetaData().getColumnCount())
-        {
-            int numColumnas = result.getMetaData().getColumnCount();
-
-            while (result.next()) {
-                if(expResult.next()) {
-                for(int j=1; j<=numColumnas; j++) {
-                    String valor = result.getString(j).toString();
-                    String valorExp = expResult.getString(j).toString();
-
-                    if(!valor.equals(valorExp)) {
-                        fail("La consulta devuelve valores distintos");
-                    }
-                }
-                } else {
-                    fail("La consulta a Amazon devuelve distinto número de filas");
-                }
-            }
-        } else {
-            fail("La consulta a Amazon devuelve distinto número de columnas");
-        }
-        
-        //Cerramos la conexión con la base de datos
-        instance.cerrar();
-        conexion.close();
     }
 }
