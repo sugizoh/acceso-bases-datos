@@ -31,7 +31,7 @@ public class ConsultorTest {
     public String cadenaConexionCasaDelLibro = "jdbc:mysql://localhost/CasaDelLibro";
     public String[] cadenaConexiones= {cadenaConexionAmazon, cadenaConexionCasaDelLibro};
     public String usuario = "root";
-    public String contraseña = "root";
+    public String contraseña = "sql";
     private Connection conexion;
     
     public ConsultorTest() throws SQLException {
@@ -121,11 +121,17 @@ public class ConsultorTest {
         {
             if (expResult.getRowCount() == result.getRowCount())
             {
-                
-                if(!expResult.getValueAt(0, 0).equals(result.getValueAt(0, 0)))
+                for (int i=0; i<expResult.getRowCount(); i++)
                 {
-                    fail("Contenido distinto");
+                    for (int j=0; j<expResult.getColumnCount(); j++)
+                     {
+                      if(!expResult.getValueAt(i, j).equals(result.getValueAt(i, j)))
+                        {
+                            fail("Contenido distinto");
+                        }
+                     }
                 }
+
             }
             else fail("Numero distinto de filas");
         }
