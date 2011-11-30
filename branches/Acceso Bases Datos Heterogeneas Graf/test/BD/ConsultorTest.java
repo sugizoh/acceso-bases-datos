@@ -107,7 +107,7 @@ public class ConsultorTest {
 
 
         String headTable[] = new String[4];
-        headTable[0] = "substr(TITULOLIBRO,1,10)";
+        headTable[0] = "substr(TITULO,1,10)";
         headTable[1] = "FECHAEDICION";
         headTable[2] = "PRECIO";
         headTable[3]= "NOMBREAUTOR";
@@ -149,10 +149,50 @@ public class ConsultorTest {
     @Test
     public void testCompletarTraduccionInversaNombresColumnas() throws Exception {
         System.out.println("completarTraduccionInversaNombresColumnas");
-        String[] headTable = null;
-        ResultSet rsConsulta = null;
+        String headTable[] = new String[4];
+        headTable[0] = "\"NULL\"";
+        headTable[1] = "\"NULL\"";
+        headTable[2] = "\"NULL\"";
+        headTable[3]= "\"NULL\"";
+        String headTableEsperado[] = new String[4];
+        headTableEsperado[0] = "substr(TITULO,1,10)";
+        headTableEsperado[1] = "FECHAEDICION";
+        headTableEsperado[2] = "PRECIO";
+        headTableEsperado[3]= "NOMBREAUTOR";
+        
+        HashMap<String, String> sentenciasSQL = new HashMap<String, String>();
+        
+        
+        String [] nombresBasesDatos= {"amazon".toUpperCase(), "casadellibro".toUpperCase()};
+        int numBaseDatos = nombresBasesDatos.length;
+        
+        sentenciasSQL.put("amazon".toUpperCase(), "SELECT substr(tituloLibro,1,10), \"NULL\", precio, nombreAutor FROM Amazon, Autor WHERE Amazon.idAutor = Autor.idAutor");
+        sentenciasSQL.put("casadellibro".toUpperCase(), "SELECT substr(titulo,1,10), fechaEdicion, precio, nombreAutor FROM CasaDelLibro, Autor WHERE CasaDelLibro.idAutor = Autor.idAutor");
+        
         Consultor instance = new Consultor();
-        instance.completarTraduccionInversaNombresColumnas(headTable, rsConsulta);
+        
+        
+        int numColumnas = 0;
+        for(int i=numBaseDatos - 1; i>= 0; i--) {
+            String nombreBD = nombresBasesDatos[i];
+            conexion = DriverManager.getConnection (cadenaConexiones[i],usuario, contraseña);
+            myStatement = conexion.createStatement();
+            ResultSet rsConsulta = myStatement.executeQuery (sentenciasSQL.get(nombreBD));
+            
+            instance.completarTraduccionInversaNombresColumnas(headTable, rsConsulta);
+            
+            //Cerramos la conexión de la base de datos
+            conexion.close();
+        }
+        
+        for (int j=0; j<headTable.length; j++)
+        {
+               if(!headTable[j].equals(headTableEsperado[j]))
+               {
+                   fail("Contenido distinto");
+               }
+        }
+
         // TODO review the generated test code and remove the default call to fail.
         //fail("The test case is a prototype.");
     }
