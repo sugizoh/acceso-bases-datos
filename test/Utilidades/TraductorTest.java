@@ -51,16 +51,44 @@ public class TraductorTest {
     public void testGetConsultasTraducidas() throws Exception {
         System.out.println("getConsultasTraducidas");
         Traductor instance = new Traductor();
-        String consultaSQL="SELECT substr(titulo,1,10), paginas, precio, nombreAutor FROM Libro WHERE Libro.idAutor = Autor.idAutor";
+        String consultaSQL="SELECT substr(titulo,1,10), paginas, precio, nombreAutor FROM Libro, Autor WHERE Libro.idAutor = Autor.idAutor";
         HashMap expResult = new HashMap();
-        expResult.put("AMAZON", "SELECT substr(tituloLibro,1,10), numPaginas, precio, nombreAutor FROM Amazon WHERE Amazon.idAutor = Autor.idAutor");
-        expResult.put("CASADELLIBRO", "SELECT substr(titulo,1,10), numPaginas, precio, nombreAutor FROM CasaDelLibro WHERE CasaDelLibro.idAutor = Autor.idAutor");
+        expResult.put("AMAZON", "SELECT substr(tituloLibro,1,10), numPaginas, precio, nombreAutor FROM Amazon, Autor WHERE Amazon.idAutor = Autor.idAutor");
+        expResult.put("CASADELLIBRO", "SELECT substr(titulo,1,10), numPaginas, precio * 1.3755, nombreAutor FROM CasaDelLibro, Autor WHERE CasaDelLibro.idAutor = Autor.idAutor");
         HashMap result = instance.getConsultasTraducidas(consultaSQL);
         if(!expResult.get("AMAZON").equals(result.get("AMAZON")))
         {
-            fail("Contenido distinto");
+            fail("Error al traducir la consulta para amazon");
         }
-           // assertEquals(expResult.get("CASADELLIBRO"), result.get("AMAZON"));
+
+        if(!expResult.get("CASADELLIBRO").equals(result.get("CASADELLIBRO")))
+        {
+            fail("Error al traducir la consulta para casa del libro");
+        }
+
+
+        //Realizamos otra traducción para comprobar que también funciona como experaba
+        consultaSQL="SELECT *, substr(titulo,1,10), paginas, precio, nombreAutor, lugarNacimiento FROM Libro, Autor WHERE Libro.idAutor = Autor.idAutor";
+        expResult = new HashMap();
+        expResult.put("AMAZON", "SELECT  nacimiento, Autor.idAutor, apellidosAutor, lugarNacimiento, nombreAutor, "
+                + "Amazon.idAutor, idLibro, tituloLibro, \"NULL\", numPaginas, descripcion, editorial, enStock, "
+                + "precio, \"NULL\", \"NULL\", fotografia , substr(tituloLibro,1,10), numPaginas, precio, nombreAutor, "
+                + "lugarNacimiento FROM Amazon, Autor WHERE Amazon.idAutor = Autor.idAutor");
+        expResult.put("CASADELLIBRO", "SELECT  nacimiento, Autor.idAutor, apellidosAutor, lugarNacimiento, "
+                + "nombreAutor, CasaDelLibro.idAutor, idLibro, titulo, ISBN, numPaginas, \"NULL\", \"NULL\", \"NULL\", "
+                + "precio * 1.3755, sinopsis, fechaEdicion, fotografia , substr(titulo,1,10), numPaginas, precio * 1.3755, "
+                + "nombreAutor, lugarNacimiento FROM CasaDelLibro, Autor WHERE CasaDelLibro.idAutor = Autor.idAutor");
+        result = instance.getConsultasTraducidas(consultaSQL);
+        
+        if(!expResult.get("AMAZON").equals(result.get("AMAZON")))
+        {
+            fail("Error al traducir la consulta para amazon");
+        }
+
+        if(!expResult.get("CASADELLIBRO").equals(result.get("CASADELLIBRO")))
+        {
+            fail("Error al traducir la consulta para casa del libro");
+        }
         
     }
 }
