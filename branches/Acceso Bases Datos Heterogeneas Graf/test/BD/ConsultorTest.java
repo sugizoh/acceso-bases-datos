@@ -5,6 +5,8 @@
 package BD;
 
 import GUI.ModeloTabla;
+import XML.Configuracion;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.sql.Statement;
@@ -12,12 +14,14 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import javax.xml.parsers.ParserConfigurationException;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
+import org.xml.sax.SAXException;
 
 /**
  *
@@ -27,11 +31,7 @@ public class ConsultorTest {
     
    
     private Statement myStatement;
-    public String cadenaConexionAmazon = "jdbc:mysql://localhost/Amazon";
-    public String cadenaConexionCasaDelLibro = "jdbc:mysql://localhost/CasaDelLibro";
-    public String[] cadenaConexiones= {cadenaConexionAmazon, cadenaConexionCasaDelLibro};
-    public String usuario = "root";
-    public String contraseña = "sql";
+    private Configuracion configuracion;
     private Connection conexion;
     
     public ConsultorTest() throws SQLException {
@@ -50,7 +50,8 @@ public class ConsultorTest {
     }
     
     @Before
-    public void setUp() {
+    public void setUp() throws RuntimeException, SAXException, IOException, ParserConfigurationException {
+        configuracion = new Configuracion();
     }
     
     @After
@@ -80,7 +81,8 @@ public class ConsultorTest {
         
         for(int i=numBaseDatos - 1; i>= 0; i--) {
             String nombreBD = nombresBasesDatos[i];
-            conexion = DriverManager.getConnection (cadenaConexiones[i],usuario, contraseña);
+            conexion = DriverManager.getConnection (configuracion.getValor(nombresBasesDatos[i], "conexion"),
+                    configuracion.getValor(nombresBasesDatos[i], "usuario"), configuracion.getValor(nombresBasesDatos[i], "password"));
             myStatement = conexion.createStatement();
             ResultSet rsConsulta = myStatement.executeQuery (sentenciasSQL.get(nombreBD));
             
@@ -175,7 +177,8 @@ public class ConsultorTest {
         int numColumnas = 0;
         for(int i=numBaseDatos - 1; i>= 0; i--) {
             String nombreBD = nombresBasesDatos[i];
-            conexion = DriverManager.getConnection (cadenaConexiones[i],usuario, contraseña);
+            conexion = DriverManager.getConnection (configuracion.getValor(nombresBasesDatos[i], "conexion"),
+                    configuracion.getValor(nombresBasesDatos[i], "usuario"), configuracion.getValor(nombresBasesDatos[i], "password"));
             myStatement = conexion.createStatement();
             ResultSet rsConsulta = myStatement.executeQuery (sentenciasSQL.get(nombreBD));
             
