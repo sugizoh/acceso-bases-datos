@@ -44,14 +44,20 @@ public class ConfiguracionTest {
     @Test
     public void testGetValor() throws Exception {
         System.out.println("getValor");
-        String baseDatos = "";
-        String valor = "";
+        
         Configuracion instance = new Configuracion();
-        String expResult = "";
-        String result = instance.getValor(baseDatos, valor);
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        
+        if(!instance.getValor("AMAZON", "Usuario").equals("root"))
+                fail("Valor no esperado en la configuración");
+
+        if(!instance.getValor("CASADELLIBRO", "Usuario").equals("root"))
+                fail("Valor no esperado en la configuración");
+
+        if(!instance.getValor("AMAZON", "Conexion").equals("jdbc:mysql://localhost/Amazon"))
+                fail("Valor no esperado en la configuración");
+
+        if(!instance.getValor("CASADELLIBRO", "Conexion").equals("jdbc:mysql://localhost/CasaDelLibro"))
+                fail("Valor no esperado en la configuración");
     }
 
     /**
@@ -59,13 +65,23 @@ public class ConfiguracionTest {
      */
     @Test
     public void testGetBaseDatos() throws Exception {
-        System.out.println("getBaseDatos");
         Configuracion instance = new Configuracion();
-        ArrayList expResult = null;
+        ArrayList expResult =  new ArrayList();
+        expResult.add("CASADELLIBRO");
+        expResult.add("AMAZON");
+
         ArrayList result = instance.getBaseDatos();
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+
+
+        if(expResult.size() == result.size()) {
+            for(int i=0; i<expResult.size(); i++) {
+                if(!expResult.get(i).equals(result.get(i))) {
+                    fail("No se esperaba ese nombre de configuración");
+                }
+            }
+        } else {
+            fail("Error en las configuraciones");
+        }
     }
 
     /**
@@ -75,11 +91,9 @@ public class ConfiguracionTest {
     public void testNumBaseDatos() throws Exception {
         System.out.println("numBaseDatos");
         Configuracion instance = new Configuracion();
-        int expResult = 0;
+        int expResult = 2;
         int result = instance.numBaseDatos();
         assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 
     /**
@@ -90,11 +104,14 @@ public class ConfiguracionTest {
         System.out.println("getNombreBaseDatos");
         int posicion = 0;
         Configuracion instance = new Configuracion();
-        String expResult = "";
+        String expResult = "CASADELLIBRO";
         String result = instance.getNombreBaseDatos(posicion);
         assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+
+        posicion = 1;
+        expResult = "AMAZON";
+        result = instance.getNombreBaseDatos(posicion);
+        assertEquals(expResult, result);
     }
 
 }
