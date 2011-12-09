@@ -4,19 +4,16 @@
  */
 package XML;
 
-import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.HashMap;
-import javax.xml.parsers.ParserConfigurationException;
+import java.util.Iterator;
+import java.util.Map;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
-import org.xml.sax.SAXException;
-
 /**
  *
  * @author JaimeInves
@@ -171,8 +168,8 @@ public class DiccionarioTest {
         
         String[] Autor = {"FECHANACIMIENTO", "IDAUTOR", "APELLIDOS", "LUGARNACIMIENTO", "NOMBREAUTOR"};
         
-        ArrayList columnasLibro = new ArrayList();
-        ArrayList columnasAutor = new ArrayList();
+        ArrayList<String> columnasLibro = new ArrayList<String>();
+        ArrayList<String> columnasAutor = new ArrayList<String>();
         
         for(int i=0; i<Libro.length; i++)
         {
@@ -183,16 +180,46 @@ public class DiccionarioTest {
         {
             columnasAutor.add(Autor[i]);
         }
-
         
-        HashMap expResult = new HashMap();
+        HashMap <String, ArrayList<String>>expResult = new HashMap<String, ArrayList<String>>();
         expResult.put("AUTOR", columnasAutor);
-        expResult.put("Libro", columnasLibro);
+        expResult.put("LIBRO", columnasLibro);
         
-        HashMap result = instance.getColumnasBaseDatos();
+        HashMap<String, ArrayList<String>> result = instance.getColumnasBaseDatos();
+
+        //Iteramos obteniendo las claves
+        Iterator it = result.entrySet().iterator();
+        Iterator itExp = expResult.entrySet().iterator();
         
-        assertEquals(expResult, result);
+        
+
+        while (it.hasNext() && itExp.hasNext()) {
+            Map.Entry e = (Map.Entry)it.next();
+            Map.Entry eExp = (Map.Entry)itExp.next();
+            String clave = e.getKey().toString();
+            String claveExp = eExp.getKey().toString();
+            if(!clave.equals(claveExp)) {
+                fail("Hay errores en la traducción del diccionario");
+            } else {
+                ArrayList<String> listaColumnasTabla = (ArrayList<String>) e.getValue();
+                ArrayList<String> listaColumnasTablaExp = (ArrayList<String>) eExp.getValue();
+                
+                if(listaColumnasTabla.size() == listaColumnasTablaExp.size())
+                {
+                    for(int i=0; i<listaColumnasTabla.size(); i++) {
+                        if(!listaColumnasTabla.get(i).equals(listaColumnasTablaExp.get(i))) {
+                            fail("Nombre de columna no esperado");
+                        }
+                    }
+                } else {
+                    fail("Faltan columnas en la traducción");
+                }
+            }
+                
+        }
     }
+    
+                  
 
     /**
      * Test of numDiccionarios method, of class Diccionario.
@@ -201,11 +228,11 @@ public class DiccionarioTest {
     public void testNumDiccionarios() {
         System.out.println("numDiccionarios");
         
-        int expResult = 0;
+        int expResult = 2;
         int result = instance.numDiccionarios();
         assertEquals(expResult, result);
         // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        //fail("The test case is a prototype.");
     }
 
     /**
@@ -220,7 +247,7 @@ public class DiccionarioTest {
         int result = instance.numTablasDiccionario(tablasDiccionario);
         assertEquals(expResult, result);
         // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        //fail("The test case is a prototype.");
     }
 
     /**
