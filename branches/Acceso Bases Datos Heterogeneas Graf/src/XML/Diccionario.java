@@ -34,12 +34,14 @@ public class Diccionario extends XML
      */
     public String getTraduccionPalabra(String baseDatos, String tabla, String palabra) {
         //Obtenemos el HashMap de las tablas del idioma
+        @SuppressWarnings("unchecked")
         HashMap<String,Object> traduccionesTablas = (HashMap<String,Object>) xmlLeido.get(baseDatos.toUpperCase());
         //Si no existe la base de datos
         if(traduccionesTablas == null) {
             return palabra; //Devolvemos la palabra tal cual la escribió el usuario
         } else {
             //Obtenemos las traducciones para la tabla indicada
+            @SuppressWarnings("unchecked")
             HashMap<String, String> traduccionesTabla = (HashMap<String,String>) traduccionesTablas.get(tabla.toUpperCase());
             //Si no existe la tabla
             if(traduccionesTabla == null) {
@@ -66,6 +68,7 @@ public class Diccionario extends XML
      */
     public String getTraduccionPalabraAutomatica(String diccionario, String palabra) {
         //Obtenemos el HashMap de las tablas del idioma
+        @SuppressWarnings("unchecked")
         HashMap<String,Object> traduccionesBD = (HashMap<String,Object>) xmlLeido.get(diccionario.toUpperCase());
         //Si no existe la base de datos
         if(traduccionesBD == null) {
@@ -81,6 +84,7 @@ public class Diccionario extends XML
             //Si es ambigua la columna
             for(int i=0; i<tablas.size() && !encontrada; i++) {
                 //Obtenemos las traducciones para la tabla indicada
+                @SuppressWarnings("unchecked")
                 HashMap<String, String> traduccionesTabla = (HashMap<String,String>) traduccionesBD.get(tablas.get(i).toUpperCase());
                 //Si existe la tabla
                 if(traduccionesTabla != null) {
@@ -127,6 +131,7 @@ public class Diccionario extends XML
             String nombreBD = nombresBD.get(z);
 
             //Obtenemos el HashMap de las tablas del idioma
+            @SuppressWarnings("unchecked")
             HashMap<String,Object> traduccionesBD = (HashMap<String,Object>) xmlLeido.get(nombreBD.toUpperCase());
 
             if(traduccionesBD != null) {
@@ -140,6 +145,7 @@ public class Diccionario extends XML
                 //Si es ambigua la columna
                 for(int i=0; i<tablas.size() && !encontrada; i++) {
                     //Obtenemos las traducciones para la tabla indicada
+                    @SuppressWarnings("unchecked")
                     HashMap<String, String> traduccionesTabla = (HashMap<String,String>) traduccionesBD.get(tablas.get(i).toUpperCase());
                     //Si existe la tabla
                     if(traduccionesTabla != null) {
@@ -191,6 +197,7 @@ public class Diccionario extends XML
      */
     public ArrayList<String> getTablasDiccionario() {
         //Cogemos el primer diccionario ya que todos van a tener las mismas claves
+        @SuppressWarnings("unchecked")
         HashMap<String, Object> diccionario = (HashMap<String, Object>)xmlLeido.get(getNombreDiccionario(0));
         //Creamos un ArrayList que contendrá el nombre de las tablas
         ArrayList<String> tablas = new ArrayList<String>();
@@ -219,8 +226,10 @@ public class Diccionario extends XML
             //Recorremos las tablas del diccionario
             for(int j=0; j<tablasDiccionario.size(); j++) {
                 //Obtenemos el nombre de la tabla actual
+                @SuppressWarnings("unchecked")
                 String tablaActual = getNombreTablaDiccionario((HashMap<String,Object>)xmlLeido.get(getNombreDiccionario(i)), j);
                 //Obtenemos la tabla actual
+                @SuppressWarnings("unchecked")
                 HashMap<String, String> tabla = (HashMap<String, String>)((HashMap<String,Object>)xmlLeido.get(getNombreDiccionario(i))).get(tablaActual.toUpperCase());
                 //Creamos un ArrayList con las claves
                 ArrayList<String> claves = new ArrayList<String>();
@@ -317,6 +326,7 @@ public class Diccionario extends XML
      */
     public boolean claveAmbigua(String clave) {
         //Obtenemos el HashMap de las tablas de la primera base de datos (el esquema es igual para todas las bases de datos)
+        @SuppressWarnings("unchecked")
         HashMap<String,Object> traduccionesBD = (HashMap<String,Object>) xmlLeido.get(getNombreDiccionario(0));
         //Sacamos las tablas que contendrán los diccionarios
         ArrayList<String> tablas = getTablasDiccionario();
@@ -327,6 +337,7 @@ public class Diccionario extends XML
             //Vamos a traducir la palabra en la tabla (si se traduce dos veces, clave ambigua)
             String traduccionObtenida = null;
             //Obtenemos las traducciones para la tabla indicada
+            @SuppressWarnings("unchecked")
             HashMap<String, String> traduccionesTabla = (HashMap<String,String>) traduccionesBD.get(tablas.get(i).toUpperCase());
             //Si existe la tabla
             if(traduccionesTabla != null) {

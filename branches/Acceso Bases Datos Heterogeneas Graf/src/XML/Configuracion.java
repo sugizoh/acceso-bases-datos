@@ -31,6 +31,7 @@ public class Configuracion extends XML
      */
     public String getValor(String baseDatos, String valor) {
         //Devolvemos la configuración para esa base de datos
+        @SuppressWarnings("unchecked")
         HashMap<String,String> configuracion = (HashMap<String,String>) xmlLeido.get(baseDatos);
         //Si no existe la base de datos
         if(configuracion == null) {
