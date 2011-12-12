@@ -14,12 +14,15 @@ import static org.junit.Assert.*;
 
 /**
  *
- * @author paracaidista
+ * @author Miguel González Y Jaime Bárez
  */
 public class ModeloTablaTest {
 
     ModeloTabla instance; //Crearemos una instancia de ModeloTabla para usar en todas las pruebas
 
+    /**
+     * Constructor del test ModeloTablaTest
+     */
     public ModeloTablaTest() {
         String datos[][] = {{"dato11", "dato12"},{"dato21", "dato22"}};
         String columnas[] = {"Columna1", "Columna2"};

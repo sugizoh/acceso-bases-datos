@@ -16,7 +16,7 @@ import org.junit.Test;
 import static org.junit.Assert.*;
 /**
  *
- * @author JaimeInves
+ * @author Jaime Bárez y Miguel González
  */
 public class DiccionarioTest {
     
@@ -25,6 +25,9 @@ public class DiccionarioTest {
     public DiccionarioTest() {
     }
 
+    /**
+     * setUpClass Se llama antes de empezar a lanzar consultas
+     */
     @BeforeClass
     public static void setUpClass() throws Exception {
         instance = new Diccionario();
@@ -63,8 +66,6 @@ public class DiccionarioTest {
         
         result = instance.getTraduccionPalabra(baseDatos, tabla, palabra);
         assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        //fail("The test case is a prototype.");
     }
 
     /**
@@ -84,8 +85,6 @@ public class DiccionarioTest {
         expResult = "\"NULL\"";
         result = instance.getTraduccionPalabraAutomatica(diccionario, palabra);
         assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        //fail("The test case is a prototype.");
     }
 
     /**
@@ -104,8 +103,6 @@ public class DiccionarioTest {
         expResult = "PAGINAS";
         result = instance.getTraduccionPalabraAutomaticaInversa(palabra);
         assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        //fail("The test case is a prototype.");
     }
 
     /**
@@ -264,9 +261,7 @@ public class DiccionarioTest {
             
             String result = instance.getNombreDiccionario(posicion);
             assertEquals(expResult[i], result);
-            posicion++;
-            // TODO review the generated test code and remove the default call to fail.
-            //fail("The test case is a prototype.");          
+            posicion++;         
         }
 
     }
@@ -284,8 +279,6 @@ public class DiccionarioTest {
         String expResult = "UNO";
         String result = instance.getNombreTablaDiccionario(tablasDiccionario, posicion);
         assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        //fail("The test case is a prototype.");
     }
 
     /**
@@ -305,7 +298,5 @@ public class DiccionarioTest {
         expResult = false;
         result = instance.claveAmbigua(clave);
         assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        //fail("The test case is a prototype.");
     }
 }

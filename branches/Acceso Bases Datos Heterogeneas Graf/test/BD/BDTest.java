@@ -35,7 +35,6 @@ public class BDTest {
     public static void setUpClass() throws Exception {
     }
 
-    //Cerramos la conexión una vez terminada las pruebas
     @AfterClass
     public static void tearDownClass() throws Exception {
     }
@@ -111,6 +110,11 @@ public class BDTest {
         }
     }
 
+    /**
+     * Test of coomprobarResultSet method, of class BD.
+     * @param result ResultSet de la consulta a través de la aplicación
+     * @return expResult ResultSet de la consulta a través del propio test
+     */
     private void coomprobarResultSet(ResultSet result, ResultSet expResult) throws SQLException {
         //Comparamos los resultados
         if(expResult.getMetaData().getColumnCount() == result.getMetaData().getColumnCount())
