@@ -54,12 +54,12 @@ public class XMLTest {
         HashMap<String, Object> hashMapAmazon = new HashMap<String, Object>();
         hashMapAmazon.put("conexion".toUpperCase(), "jdbc:mysql://localhost/Amazon");
         hashMapAmazon.put("usuario".toUpperCase(), "root");
-        hashMapAmazon.put("password".toUpperCase(), "root");
+        hashMapAmazon.put("password".toUpperCase(), "sql");
 
         HashMap<String, Object> hashMapCasaDelLibro = new HashMap<String, Object>();
         hashMapCasaDelLibro.put("conexion".toUpperCase(), "jdbc:mysql://localhost/CasaDelLibro");
         hashMapCasaDelLibro.put("usuario".toUpperCase(), "root");
-        hashMapCasaDelLibro.put("password".toUpperCase(), "root");
+        hashMapCasaDelLibro.put("password".toUpperCase(), "sql");
 
         hashMapExp.put("amazon".toUpperCase(),(HashMap<String, String>) (Object) hashMapAmazon);
         hashMapExp.put("casadellibro".toUpperCase(), (HashMap<String, String>) (Object) hashMapCasaDelLibro);

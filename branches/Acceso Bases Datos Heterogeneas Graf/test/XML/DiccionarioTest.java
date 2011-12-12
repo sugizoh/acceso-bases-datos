@@ -241,9 +241,9 @@ public class DiccionarioTest {
     @Test
     public void testNumTablasDiccionario() {
         System.out.println("numTablasDiccionario");
-        HashMap<String, Object> tablasDiccionario = null;
-        
-        int expResult = 0;
+        HashMap<String, Object> tablasDiccionario = new HashMap<String, Object>();
+        tablasDiccionario.put("prueba", "prueba");
+        int expResult = 1;
         int result = instance.numTablasDiccionario(tablasDiccionario);
         assertEquals(expResult, result);
         // TODO review the generated test code and remove the default call to fail.
@@ -257,12 +257,18 @@ public class DiccionarioTest {
     public void testGetNombreDiccionario() {
         System.out.println("getNombreDiccionario");
         int posicion = 0;
+        String[] expResult = {"CASADELLIBRO", "AMAZON"};
         
-        String expResult = "";
-        String result = instance.getNombreDiccionario(posicion);
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        for (int i = 0; i<instance.numDiccionarios(); i++)
+        {
+            
+            String result = instance.getNombreDiccionario(posicion);
+            assertEquals(expResult[i], result);
+            posicion++;
+            // TODO review the generated test code and remove the default call to fail.
+            //fail("The test case is a prototype.");          
+        }
+
     }
 
     /**
@@ -271,14 +277,15 @@ public class DiccionarioTest {
     @Test
     public void testGetNombreTablaDiccionario() {
         System.out.println("getNombreTablaDiccionario");
-        HashMap<String, Object> tablasDiccionario = null;
+        HashMap<String, Object> tablasDiccionario = new HashMap<String, Object>();
+        tablasDiccionario.put("uno", null);
         int posicion = 0;
         
-        String expResult = "";
+        String expResult = "UNO";
         String result = instance.getNombreTablaDiccionario(tablasDiccionario, posicion);
         assertEquals(expResult, result);
         // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        //fail("The test case is a prototype.");
     }
 
     /**
@@ -287,12 +294,18 @@ public class DiccionarioTest {
     @Test
     public void testClaveAmbigua() {
         System.out.println("claveAmbigua");
-        String clave = "";
+        String clave = "IDAUTOR";
         
-        boolean expResult = false;
+        boolean expResult = true;
         boolean result = instance.claveAmbigua(clave);
         assertEquals(expResult, result);
+        clave = "IDAUTOR";
+        
+        clave = "IDLIBRO";
+        expResult = false;
+        result = instance.claveAmbigua(clave);
+        assertEquals(expResult, result);
         // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        //fail("The test case is a prototype.");
     }
 }

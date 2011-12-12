@@ -11,7 +11,7 @@ public class Analizador {
 
     private final String palabrasSeparadoras;
     private final String palabrasSeparadorasRegex;
-/**
+    /**
      * Constructor
      */
     public Analizador()

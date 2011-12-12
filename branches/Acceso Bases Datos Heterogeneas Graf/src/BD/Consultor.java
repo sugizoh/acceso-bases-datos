@@ -1,7 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package BD;
 
 import GUI.ModeloTabla;
@@ -18,7 +14,7 @@ import javax.xml.parsers.ParserConfigurationException;
 import org.xml.sax.SAXException;
 
 /**
- *
+ * Clase que se encarga de gestionar el lanzamiento de varias consultas
  * @author Miguel González y Jaime Bárez
  */
 public class Consultor {
@@ -26,7 +22,10 @@ public class Consultor {
     private Analizador analizador;
     private BD baseDatos;
     Configuracion config;
-
+    
+    /**
+     * Constructor
+     */
     public Consultor() throws SQLException, RuntimeException, SAXException, IOException, ParserConfigurationException {
         diccionario = new Diccionario();
         analizador = new Analizador();
@@ -34,6 +33,12 @@ public class Consultor {
         config = new Configuracion();
     }
 
+    /**
+     * Lanza las consultas SQL y devuelve un ModeloTabla con los resultados obtenidos
+     * @param sentenciasSQL Las sentencias a lanzar
+     * @return El model de los resultados del lanzamiento de las consultas
+     * @throws SQLException 
+     */
     public ModeloTabla lanzarConsulta(HashMap<String, String> sentenciasSQL) throws SQLException {
         String headTable[] = null;
         String datos[][] = null;
@@ -81,6 +86,12 @@ public class Consultor {
         return new ModeloTabla(datos,headTable);
     }
 
+    /**
+     * Completa los nombres de las columnas al modelo genérico
+     * @param headTable Contiene las cabeceras de nombres de columnas
+     * @param rsConsulta ResultSet recibido
+     * @throws SQLException 
+     */
     public void completarTraduccionInversaNombresColumnas(String []headTable,  ResultSet rsConsulta) throws SQLException {
 
         int numColumnas= headTable.length;
