@@ -23,7 +23,10 @@ import org.xml.sax.SAXException;
 public class TraductorTest {
     
     Diccionario diccionario;
-    
+
+    /**
+     * Constructor del test TraductorTest
+     */
     public TraductorTest() throws RuntimeException, SAXException, IOException, ParserConfigurationException {
         diccionario = new Diccionario();
     }

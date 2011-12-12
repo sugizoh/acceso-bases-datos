@@ -43,6 +43,9 @@ public class XMLTest {
     public void tearDown() {
     }
 
+    /**
+     * Test of testConfiguracionXML method, of class XMLTest.
+     */
     @Test
     public void testConfiguracionXML() throws RuntimeException, SAXException, IOException, ParserConfigurationException {
         System.out.println("Creando objeto XML de testConfiguracion.xml");

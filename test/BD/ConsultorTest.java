@@ -33,7 +33,10 @@ public class ConsultorTest {
     private Statement myStatement;
     private Configuracion configuracion;
     private Connection conexion;
-    
+
+    /**
+     * Constructor del test ConsultorTest
+     */
     public ConsultorTest() throws SQLException {
         DriverManager.registerDriver(new org.gjt.mm.mysql.Driver());
         System.out.println("Abriendo conexión con Amazon");
@@ -138,11 +141,6 @@ public class ConsultorTest {
             else fail("Numero distinto de filas");
         }
         else fail("Numero distinto de columnas");
-        
-        
-        //assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        //fail("The test case is a prototype.");
     }
 
     /**
@@ -195,8 +193,5 @@ public class ConsultorTest {
                    fail("Contenido distinto");
                }
         }
-
-        // TODO review the generated test code and remove the default call to fail.
-        //fail("The test case is a prototype.");
     }
 }
