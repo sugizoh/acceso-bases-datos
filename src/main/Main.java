@@ -58,7 +58,7 @@ public class Main extends JFrame {
 
         this.setLayout(null);
 
-        JLabel lblEsquema = new JLabel("Esquea de la base de datos:");
+        JLabel lblEsquema = new JLabel("Esquema de la base de datos:");
         lblEsquema.setBounds(20,20,400,15);
         lblEsquema.setVisible(true);
         this.add(lblEsquema);
