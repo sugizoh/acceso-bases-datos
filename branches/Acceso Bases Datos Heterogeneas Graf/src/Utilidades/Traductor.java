@@ -10,7 +10,7 @@ import javax.xml.parsers.ParserConfigurationException;
 import org.xml.sax.SAXException;
 
 /**
- * Clase Traductor
+ * Clase que se encarga de traducir una palabra (nombre de columna) del esquema genérico a la base de datos especificada.
  * @author Miguel González y Jaime Bárez
  */
 public class Traductor

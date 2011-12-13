@@ -10,9 +10,8 @@ import javax.xml.parsers.ParserConfigurationException;
 import org.xml.sax.SAXException;
 
 /**
- *
+ * Clase que se encarga a través de un XML de cargar los diferentes diccionarios de las bases de datos.
  * @author Miguel González y Jaime Bárez
- * Clase Diccionario
  */
 public class Diccionario extends XML
 {

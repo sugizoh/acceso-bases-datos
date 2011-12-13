@@ -12,7 +12,7 @@ import org.w3c.dom.Element;
 import org.xml.sax.SAXException;
 
 /**
- * Clase XML
+ * Clase que se encarga de cargar un XML en un objeto de tipo HashMap a través de DOM.
  * @author Miguel Gonzalez y Jaime Bárez
  * 
  */

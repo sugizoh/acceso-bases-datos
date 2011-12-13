@@ -28,12 +28,13 @@ import javax.swing.table.JTableHeader;
  * Clase principal del programa
  */
 public class Main extends JFrame {
-    //
-    Traductor traductor;
-    JTextArea txtConsulta;
-    JButton btnEjecutarConsulta;
-    JTable tablaResultados;
-    JScrollPane pane;
+
+    public Traductor traductor;
+    public Consultor consultor;
+    public JTextArea txtConsulta;
+    public JButton btnEjecutarConsulta;
+    public JTable tablaResultados;
+    public JScrollPane pane;
 
     public Main(String nombrePrograma) {
         super(nombrePrograma);
@@ -116,10 +117,11 @@ public class Main extends JFrame {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-         JFrame principal = new Main("Consulta base de datos");
-         principal.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-         principal.setBounds(100, 50, 1000, 500);
-         principal.setVisible(true);
+        //Creamos la ventana gráfica
+        JFrame principal = new Main("Consulta base de datos");
+        principal.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        principal.setBounds(100, 50, 1000, 500);
+        principal.setVisible(true);
     }
 }
 
@@ -135,10 +137,10 @@ class eventosBotones implements ActionListener
     public void actionPerformed(ActionEvent e) {
         try {
             String consultaSQL = main.txtConsulta.getText();
-            Traductor traductor = new Traductor();
-            HashMap<String, String> traducciones = traductor.getConsultasTraducidas(consultaSQL);
-            Consultor consultor = new Consultor();
-            ModeloTabla tableModel = consultor.lanzarConsulta(traducciones);
+            main.traductor = new Traductor();
+            HashMap<String, String> traducciones = main.traductor.getConsultasTraducidas(consultaSQL);
+            main.consultor = new Consultor();
+            ModeloTabla tableModel = main.consultor.lanzarConsulta(traducciones);
             main.tablaResultados.setModel(tableModel);
         } catch (Exception ex) {
             //Pasamos el error al Logger
