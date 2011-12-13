@@ -10,8 +10,8 @@ import javax.xml.parsers.ParserConfigurationException;
 import org.xml.sax.SAXException;
 
 /**
+ * Clase que se encarga a través de un XML de cargar la configuración de las distintas bases de datos a las que accede la aplicación.
  * @author Miguel González y Jaime Bárez
- * Clase Configuracion
  */
 public class Configuracion extends XML
 {
