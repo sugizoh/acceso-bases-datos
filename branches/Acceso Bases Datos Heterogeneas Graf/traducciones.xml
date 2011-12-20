@@ -43,7 +43,7 @@
             <ISBN>ISBN</ISBN>
             <paginas>numPaginas</paginas>
             <stock>"NULL"</stock>
-            <precio>precio * 1.3755</precio>
+            <precio>(precio * 1.3755)</precio>
             <descripcion>"NULL"</descripcion>
             <fotografia>fotografia</fotografia>
             <fechaEdicion>fechaEdicion</fechaEdicion>
