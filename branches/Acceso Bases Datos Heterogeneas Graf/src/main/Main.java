@@ -127,7 +127,7 @@ public class Main extends JFrame {
 
 class eventosBotones implements ActionListener
 {
-    Main main;
+    private Main main;
 
     public eventosBotones(Main main) {
         this.main = main;

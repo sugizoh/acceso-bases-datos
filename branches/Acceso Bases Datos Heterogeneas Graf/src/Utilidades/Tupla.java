@@ -9,7 +9,7 @@ public class Tupla {
     private String palabra;
     private Boolean esSeparador;
     
-    Tupla(String miPalabra, Boolean esSeparador) {
+    public Tupla(String miPalabra, Boolean esSeparador) {
         setPalabra(miPalabra);
         setEsSeparador(esSeparador);
     }

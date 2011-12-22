@@ -1,6 +1,5 @@
 package XML;
 
-import Utilidades.XML;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
