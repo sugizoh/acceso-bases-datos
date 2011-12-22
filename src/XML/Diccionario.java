@@ -19,7 +19,7 @@ public class Diccionario extends XML
      */
     public Diccionario() throws RuntimeException, SAXException, IOException, ParserConfigurationException
     {
-        super("traducciones.xml", "basedatos", "tabla");
+        super(System.getProperty("user.dir").concat("/traducciones.xml"), "basedatos", "tabla");
     }
 
     /**
