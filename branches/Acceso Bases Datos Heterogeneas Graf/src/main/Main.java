@@ -66,7 +66,7 @@ public class Main extends JFrame {
 
         JLabel lblImagenEsquema = new JLabel();
         lblImagenEsquema.setBounds(10, 40, 980, 80);
-        lblImagenEsquema.setIcon(new ImageIcon("esquemaBD.png"));
+        lblImagenEsquema.setIcon(new ImageIcon(System.getProperty("user.dir").concat("/esquemaBD.png")));
         this.add(lblImagenEsquema);
 
 

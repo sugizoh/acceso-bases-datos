@@ -19,7 +19,7 @@ public class Configuracion extends XML
      */
     public Configuracion() throws RuntimeException, SAXException, IOException, ParserConfigurationException
     {
-        super("configuracion.xml", "basedatos");
+        super(System.getProperty("user.dir").concat("/configuracion.xml"), "basedatos");
     }
 
     /**
