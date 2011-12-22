@@ -5,6 +5,7 @@
 
 package Utilidades;
 
+import XML.XML;
 import java.util.Map;
 import java.util.Iterator;
 import java.util.HashMap;
